@@ -6,7 +6,12 @@ import {
   TrashIcon, 
   DownloadIcon, 
   EyeIcon,
-  XIcon 
+  XIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  RotateCwIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
 } from 'lucide-react';
 import { Document, Page } from 'react-pdf';
 import '../utils/pdfjs-init';
@@ -20,7 +25,7 @@ if (typeof window !== 'undefined' && 'pdfjsLib' in window) {
   window.pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 }
 
-const PDFManager = () => {
+const PDFManager = ({ triggerRefresh }) => {
   const [pdfs, setPdfs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,13 +34,15 @@ const PDFManager = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pdfError, setPdfError] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [scale, setScale] = useState(1.2);
+  const [rotation, setRotation] = useState(0);
   const user = useSelector((state) => state.auth.signupData);
 
   useEffect(() => {
     if (user?.email) {
       fetchPDFs();
     }
-  }, [user?.email]);
+  }, [user?.email, triggerRefresh]);
 
   const fetchPDFs = async () => {
     try {
@@ -49,7 +56,13 @@ const PDFManager = () => {
       const encodedEmail = encodeURIComponent(user.email);
       const response = await axios.get(`http://localhost:5001/pdfs/${encodedEmail}`);
       console.log('PDF response:', response.data);
-      setPdfs(response.data.files || []);
+      
+      // Sort PDFs by last_modified date (newest first)
+      const sortedPdfs = (response.data.files || []).sort((a, b) => {
+        return new Date(b.last_modified) - new Date(a.last_modified);
+      });
+      
+      setPdfs(sortedPdfs);
       setError(null);
     } catch (err) {
       console.error('Error fetching PDFs:', err);
@@ -96,6 +109,8 @@ const PDFManager = () => {
     try {
       setPdfError(null);
       setPdfLoading(true);
+      setScale(1.2);
+      setRotation(0);
       const encodedEmail = encodeURIComponent(user.email);
       const response = await axios.get(
         `http://localhost:5001/pdfs/${encodedEmail}/${filename}`,
@@ -109,7 +124,7 @@ const PDFManager = () => {
       
       const blob = new Blob([response.data], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
-      setSelectedPDF(url);
+      setSelectedPDF({ url, filename });
       setPageNumber(1);
       setError(null);
     } catch (err) {
@@ -135,6 +150,14 @@ const PDFManager = () => {
     setPageNumber(prevPageNumber => Math.min(Math.max(1, prevPageNumber + offset), numPages));
   };
 
+  const adjustZoom = (delta) => {
+    setScale(prevScale => Math.max(0.5, Math.min(2.5, prevScale + delta)));
+  };
+
+  const rotate = () => {
+    setRotation(prevRotation => (prevRotation + 90) % 360);
+  };
+
   const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -147,9 +170,18 @@ const PDFManager = () => {
     return new Date(isoString).toLocaleString();
   };
 
+  const closePdfViewer = () => {
+    if (selectedPDF) {
+      window.URL.revokeObjectURL(selectedPDF.url);
+      setSelectedPDF(null);
+      setNumPages(null);
+      setPageNumber(1);
+    }
+  };
+
   if (!user?.email) {
     return (
-      <div className="text-center py-8 text-red-500">
+      <div className="text-center py-8 text-red-600">
         Please log in to view your PDFs.
       </div>
     );
@@ -174,46 +206,77 @@ const PDFManager = () => {
       )}
 
       {selectedPDF && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
-          <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
-            <div className="p-4 flex justify-between items-center border-b">
-              <div className="flex items-center space-x-4">
-                <h3 className="text-lg font-semibold">PDF Viewer</h3>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => changePage(-1)}
-                    disabled={pageNumber <= 1}
-                    className="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
-                  >
-                    Previous
-                  </button>
-                  <span>
-                    Page {pageNumber} of {numPages}
-                  </span>
-                  <button
-                    onClick={() => changePage(1)}
-                    disabled={pageNumber >= numPages}
-                    className="px-3 py-1 bg-blue-500 text-white rounded disabled:opacity-50"
-                  >
-                    Next
-                  </button>
-                </div>
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 z-50">
+          <div className="bg-white rounded-lg w-full max-w-5xl h-[90vh] flex flex-col">
+            <div className="p-4 flex justify-between items-center border-b bg-gray-50">
+              <div className="flex items-center space-x-2">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {selectedPDF.filename}
+                </h3>
               </div>
               <button
-                onClick={() => {
-                  setSelectedPDF(null);
-                  window.URL.revokeObjectURL(selectedPDF);
-                  setNumPages(null);
-                  setPageNumber(1);
-                }}
-                className="p-1 hover:bg-gray-100 rounded"
+                onClick={closePdfViewer}
+                className="p-1 hover:bg-gray-200 rounded text-gray-700"
+                title="Close"
               >
                 <XIcon className="h-6 w-6" />
               </button>
             </div>
-            <div className="flex-1 p-4 overflow-auto flex justify-center">
+            
+            <div className="p-2 bg-gray-100 border-b flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => changePage(-1)}
+                  disabled={pageNumber <= 1}
+                  className="p-2 bg-blue-500 text-white rounded disabled:opacity-50 flex items-center"
+                  title="Previous Page"
+                >
+                  <ChevronLeftIcon className="h-4 w-4" />
+                  <span className="ml-1">Prev</span>
+                </button>
+                <div className="text-gray-800 font-medium">
+                  Page {pageNumber} of {numPages || '?'}
+                </div>
+                <button
+                  onClick={() => changePage(1)}
+                  disabled={pageNumber >= numPages}
+                  className="p-2 bg-blue-500 text-white rounded disabled:opacity-50 flex items-center"
+                  title="Next Page"
+                >
+                  <span className="mr-1">Next</span>
+                  <ChevronRightIcon className="h-4 w-4" />
+                </button>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => adjustZoom(-0.2)}
+                  className="p-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded"
+                  title="Zoom Out"
+                >
+                  <ZoomOutIcon className="h-4 w-4" />
+                </button>
+                <span className="text-gray-800">{Math.round(scale * 100)}%</span>
+                <button
+                  onClick={() => adjustZoom(0.2)}
+                  className="p-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded"
+                  title="Zoom In"
+                >
+                  <ZoomInIcon className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={rotate}
+                  className="p-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded ml-2"
+                  title="Rotate"
+                >
+                  <RotateCwIcon className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex-1 p-6 overflow-auto flex justify-center bg-gray-200">
               {pdfError ? (
-                <div className="flex items-center justify-center text-red-500">
+                <div className="flex items-center justify-center text-red-600 bg-white p-4 rounded">
                   {pdfError}
                 </div>
               ) : pdfLoading ? (
@@ -222,7 +285,7 @@ const PDFManager = () => {
                 </div>
               ) : (
                 <Document
-                  file={selectedPDF}
+                  file={selectedPDF.url}
                   onLoadSuccess={onDocumentLoadSuccess}
                   onLoadError={onDocumentLoadError}
                   loading={
@@ -235,8 +298,9 @@ const PDFManager = () => {
                     pageNumber={pageNumber}
                     renderTextLayer={true}
                     renderAnnotationLayer={true}
-                    className="shadow-lg"
-                    scale={1.2}
+                    className="shadow-lg bg-white"
+                    scale={scale}
+                    rotate={rotation}
                   />
                 </Document>
               )}
@@ -247,7 +311,7 @@ const PDFManager = () => {
 
       <div className="grid gap-4">
         {pdfs.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-600 bg-white p-6 rounded-lg shadow">
             No PDFs found. Upload some files to get started.
           </div>
         ) : (
@@ -259,8 +323,8 @@ const PDFManager = () => {
               <div className="flex items-center space-x-4">
                 <FileIcon className="h-8 w-8 text-red-500" />
                 <div>
-                  <h3 className="font-medium">{pdf.filename}</h3>
-                  <div className="text-sm text-gray-500">
+                  <h3 className="font-medium text-gray-800">{pdf.filename}</h3>
+                  <div className="text-sm text-gray-600">
                     {formatFileSize(pdf.size)} • {formatDate(pdf.last_modified)}
                   </div>
                 </div>
@@ -297,4 +361,4 @@ const PDFManager = () => {
   );
 };
 
-export default PDFManager; 
+export default PDFManager;

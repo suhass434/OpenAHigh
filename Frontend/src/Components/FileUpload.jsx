@@ -14,6 +14,7 @@ const FileUpload = ({ onUploadComplete }) => {
   // Get user data and token from Redux store
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.signupData);
+  
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -100,11 +101,12 @@ const FileUpload = ({ onUploadComplete }) => {
         // Clear selected files on successful upload
         setSelectedFiles([]);
         
-        // If document processing was successful, return the result
+        // If document processing was successful, return the result and trigger refresh
         if (onUploadComplete) {
-          onUploadComplete([response.data]);
+          onUploadComplete(response.data);
         }
         
+        window.location.reload();
       }
     } catch (err) {
       console.error('Upload failed:', err);
@@ -135,7 +137,7 @@ const FileUpload = ({ onUploadComplete }) => {
           
           <div className="flex flex-col items-center justify-center space-y-4">
             <CloudUploadIcon className="w-16 h-16 text-gray-400" />
-            <p className="text-gray-600">
+            <p className="text-gray-700 font-medium">
               Drag & drop your PDF files here
             </p>
             <button 
@@ -160,19 +162,19 @@ const FileUpload = ({ onUploadComplete }) => {
         {/* Selected Files List */}
         {selectedFiles.length > 0 && (
           <div className="mt-4">
-            <h3 className="text-sm font-medium text-gray-700 mb-2">Selected PDF:</h3>
+            <h3 className="text-sm font-medium text-gray-800 mb-2">Selected PDF:</h3>
             <ul className="space-y-2">
               {selectedFiles.map((file, index) => (
                 <li key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded-md">
                   <div className="flex items-center">
-                    <span className="text-sm text-gray-700 truncate max-w-xs">{file.name}</span>
-                    <span className="ml-2 text-xs text-gray-500">
+                    <span className="text-sm text-gray-800 truncate max-w-xs">{file.name}</span>
+                    <span className="ml-2 text-xs text-gray-600">
                       ({(file.size / 1024 / 1024).toFixed(2)} MB)
                     </span>
                   </div>
                   <button
                     onClick={() => removeFile(file.name)}
-                    className="p-1 text-gray-400 hover:text-red-500"
+                    className="p-1 text-gray-600 hover:text-red-500"
                     title="Remove file"
                   >
                     <XIcon className="h-4 w-4" />
@@ -193,7 +195,7 @@ const FileUpload = ({ onUploadComplete }) => {
         {/* Upload Progress */}
         {isUploading && (
           <div className="mt-4">
-            <div className="flex justify-between text-sm text-gray-600 mb-1">
+            <div className="flex justify-between text-sm text-gray-700 mb-1">
               <span>Uploading...</span>
               <span>{uploadProgress}%</span>
             </div>
