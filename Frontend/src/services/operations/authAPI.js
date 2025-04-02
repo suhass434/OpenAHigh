@@ -103,6 +103,7 @@ export function login(email, password, navigate) {
       dispatch(setToken(response.data.token))
       dispatch(setSignupData(response.data.user))
       localStorage.setItem("token", JSON.stringify(response.data.token))
+      localStorage.setItem("signupData", JSON.stringify(response.data.user))
       navigate("/dashboard/")
     } catch (error) {
       console.log("LOGIN API ERROR............", error)

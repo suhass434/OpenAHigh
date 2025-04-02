@@ -12,7 +12,8 @@ import Projects from "./Components/Dashboard/Projects"
 import Tasks from "./Components/Dashboard/Tasks"
 import Messages from "./Components/Dashboard/Messages"
 import Settings from "./Components/Dashboard/Settings"
-import Calendar  from "./Components/Dashboard/Calendar"
+import Calendar from "./Components/Dashboard/Calendar"
+import PDFs from "./Components/Dashboard/PDFs"
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
     <Route path="calendar" element={<Calendar />} />
     <Route path="messages" element={<Messages />} />
     <Route path="settings" element={<Settings />} />
+    <Route path="pdfs" element={<PDFs />} />
   </Route>
         </Routes>
     </>

@@ -8,12 +8,12 @@ const ThemeProvider = ({ children }) => {
    
     if (isDarkMode) {
       document.documentElement.classList.add('dark-mode');
-      document.documentElement.style.backgroundColor = '#111827'; // bg-gray-900
-      document.documentElement.style.color = '#f9fafb'; // text-gray-50
+      document.documentElement.style.backgroundColor = '#111827'; 
+      document.documentElement.style.color = '#f9fafb'; 
     } else {
       document.documentElement.classList.remove('dark-mode');
-      document.documentElement.style.backgroundColor = '#f9fafb'; // bg-gray-50
-      document.documentElement.style.color = '#111827'; // text-gray-900
+      document.documentElement.style.backgroundColor = '#f9fafb'; 
+      document.documentElement.style.color = '#111827'; 
     }
   }, [isDarkMode]);
 
