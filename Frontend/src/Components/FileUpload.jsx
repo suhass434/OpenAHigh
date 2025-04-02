@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { CloudUploadIcon, XIcon } from 'lucide-react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const FileUpload = ({ onUploadComplete }) => {  
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -9,7 +10,10 @@ const FileUpload = ({ onUploadComplete }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState(null);
   const inputRef = useRef(null);
-
+  
+  // Get user data and token from Redux store
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.signupData);
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,14 +61,33 @@ const FileUpload = ({ onUploadComplete }) => {
     try {
       if (selectedFiles.length > 0) {
         setIsUploading(true);
+        const formData = new FormData();
         
         // Process each file and create FormData
-        const file = selectedFiles[0]; // For simplicity, process one file at a time
-        const formData = new FormData();
-        formData.append('file', file);
+        selectedFiles.forEach((file) => {
+          formData.append(`file[]`, file);
+        });
         
+        // Add user email to the form data
+        const userEmail = user?.email || localStorage.getItem('userEmail');
+        if (!userEmail) {
+          throw new Error('User email not found. Please log in again.');
+        }
+        formData.append('userEmail', userEmail);
+       
+        console.log('Files to upload:', formData.getAll('file[]'));
+        console.log('User email:', userEmail);
+
         // Upload with progress tracking
-        const response = await axios.post('http://localhost:5000/upload-pdf/', formData, {
+        const response = await axios({
+          method: 'post',
+          url: 'http://localhost:5001/upload-pdf/',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token || localStorage.getItem('token')}`
+          },
+          withCredentials: true,
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setUploadProgress(percentCompleted);
@@ -74,6 +97,9 @@ const FileUpload = ({ onUploadComplete }) => {
         // Process response
         console.log('Upload and document processing completed:', response.data);
         
+        // Clear selected files on successful upload
+        setSelectedFiles([]);
+        
         // If document processing was successful, return the result
         if (onUploadComplete) {
           onUploadComplete([response.data]);
@@ -82,7 +108,7 @@ const FileUpload = ({ onUploadComplete }) => {
       }
     } catch (err) {
       console.error('Upload failed:', err);
-      setError('Upload failed. Please try again.');
+      setError(err.response?.data?.error || err.message || 'Upload failed. Please try again.');
     } finally {
       setIsUploading(false);
       setUploadProgress(0);

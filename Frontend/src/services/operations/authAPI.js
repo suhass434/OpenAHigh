@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast"
 
-import { setLoading, setToken } from "../../Slices/authSlice"
+import { setLoading, setToken, setSignupData } from "../../Slices/authSlice"
 // import { resetCart } from "../../slices/cartSlice"
 // import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
@@ -101,6 +101,7 @@ export function login(email, password, navigate) {
 
       toast.success("Login Successful")
       dispatch(setToken(response.data.token))
+      dispatch(setSignupData(response.data.user))
       localStorage.setItem("token", JSON.stringify(response.data.token))
       navigate("/dashboard/")
     } catch (error) {

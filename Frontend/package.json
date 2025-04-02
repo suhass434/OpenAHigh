@@ -7,6 +7,7 @@
     "axios": "^1.8.4",
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
+    "lucide-react": "^0.487.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.2",
@@ -16,7 +17,7 @@
     "react-router-dom": "^7.4.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
-  }, 
+  },
   "scripts": {
     "server": "cd Server && npm run dev",
     "dev": "concurrently -n \"client,devServer\" -c \"bgBlue,bgYellow\" \"npm start\" \"cd ../Backend/GeneralBackend && npm run dev\"",
