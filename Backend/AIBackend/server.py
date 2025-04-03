@@ -11,13 +11,13 @@ from pydantic import BaseModel
 from chat_utils import setup_conversation_chain, get_conversation_response
 import logging
 
-# Set up logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Initialize the conversation chain at startup
+
 conversation_chain = setup_conversation_chain()
 
 app.add_middleware(
@@ -130,7 +130,7 @@ async def upload_pdf(
         if not files:
             raise HTTPException(status_code=400, detail="No files provided")
         
-        # Ensure user directory exists
+        
         user_dir = ensure_user_directory(userEmail)
         uploaded_files = []
         

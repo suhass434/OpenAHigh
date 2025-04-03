@@ -3,10 +3,9 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDarkMode } from '../Slices/themeSlice';
 import useOnClickOutside from '../hooks/useOnClickOutside';
-import { FileText, FileSpreadsheet, FileSearch } from 'lucide-react';
+import { FileText, FileSpreadsheet, FileSearch, MessageCircle } from 'lucide-react';
 
 const sidebarItems = [
-
   {
     id: 'task1',
     label: 'PDF Metadata',
@@ -21,6 +20,11 @@ const sidebarItems = [
     id: 'task3',
     label: 'Change Notice',
     icon: 'fileSearch',
+  },
+  {
+    id: 'chat',
+    label: 'Chat Assistant',
+    icon: 'messageCircle',
   },
   { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
@@ -110,12 +114,8 @@ const Dashboard = () => {
             <line x1="3" y1="10" x2="21" y2="10"></line>
           </svg>
         );
-      case 'message-circle':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-          </svg>
-        );
+      case 'messageCircle':
+        return <MessageCircle className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />;
       case 'settings':
         return (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -308,7 +308,7 @@ const Dashboard = () => {
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                  {sidebarItems.slice(0, 3).map((item) => (
+                  {sidebarItems.map((item) => (
                     <button
                       key={item.id}
                       onClick={() => handleItemClick(item.id)}

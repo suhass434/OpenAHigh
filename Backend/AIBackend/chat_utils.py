@@ -10,22 +10,22 @@ from langchain.prompts import PromptTemplate
 import logging
 from fastapi import HTTPException
 
-# Set up logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-# Define the directories
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 docs_dir = os.path.join(current_dir, "documents")
 db_dir = os.path.join(current_dir, "db", "chroma_db")
 
-# Ensure directories exist
+
 os.makedirs(docs_dir, exist_ok=True)
 os.makedirs(db_dir, exist_ok=True)
 
-# Custom prompt template
+
 CUSTOM_PROMPT = PromptTemplate(
     template="""You are CrawlShastra's AI assistant, a helpful and knowledgeable chatbot for Honeywell's document management system.
 Use the following pieces of context to answer the question at the end. 

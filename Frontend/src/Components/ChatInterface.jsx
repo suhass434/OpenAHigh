@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
   Send, 
   Mic, 
@@ -9,9 +10,12 @@ import {
   MoreVertical, 
   Check, 
   Settings, 
-  X 
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 import axios from 'axios';
+import { toggleDarkMode } from '../Slices/themeSlice';
 
 // Sidebar Chat Item Component
 const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
@@ -21,7 +25,10 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
     <div 
       className={`
         group relative flex items-center justify-between p-3 cursor-pointer 
-        ${isActive ? 'bg-gray-100' : 'hover:bg-gray-50'}
+        ${isActive 
+          ? 'bg-indigo-50 dark:bg-indigo-900/30' 
+          : 'hover:bg-gray-50 dark:hover:bg-gray-800'
+        }
         transition-colors duration-200
       `}
       onMouseEnter={() => setIsHovering(true)}
@@ -29,8 +36,8 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
       onClick={onSelect}
     >
       <div className="flex items-center space-x-3">
-        <MessageSquare className="w-5 h-5 text-gray-500" />
-        <span className="text-sm truncate max-w-[150px]">
+        <MessageSquare className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        <span className="text-sm truncate max-w-[150px] text-gray-700 dark:text-gray-300">
           {chat.title || 'New Chat'}
         </span>
       </div>
@@ -40,7 +47,7 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
             e.stopPropagation();
             onDelete(chat.id);
           }}
-          className="text-red-500 hover:bg-red-50 p-1 rounded-full"
+          className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded-full"
         >
           <Trash2 className="w-4 h-4" />
         </button>
@@ -51,6 +58,8 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
 
 // Main Chat Interface
 const ChatInterface = () => {
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
   const [chats, setChats] = useState([
     { 
       id: 1, 
@@ -83,6 +92,11 @@ const ChatInterface = () => {
   useEffect(() => {
     scrollToBottom();
   }, [activeChat?.messages]);
+
+  // Apply theme class to html element
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
 
   // Create a new chat
   const createNewChat = () => {
@@ -220,13 +234,13 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex h-screen bg-white dark:bg-gray-900">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
+      <div className="w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
         {/* New Chat Button */}
         <button 
           onClick={createNewChat}
-          className="m-4 flex items-center justify-center space-x-2 bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-600 transition-colors"
+          className="m-4 flex items-center justify-center space-x-2 bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white p-3 rounded-lg transition-colors"
         >
           <Plus className="w-5 h-5" />
           <span>New Chat</span>
@@ -249,19 +263,30 @@ const ChatInterface = () => {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Chat Header */}
-        <div className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-800">
+        <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 flex justify-between items-center">
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
             {activeChat.title || 'New Chat'}
           </h2>
           <div className="flex items-center space-x-2">
-            <button className="text-gray-500 hover:bg-gray-100 p-2 rounded-full">
+            <button 
+              onClick={() => dispatch(toggleDarkMode())}
+              className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full transition-colors"
+              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDarkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+            <button className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full">
               <Settings className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50 dark:bg-gray-900">
           {activeChat.messages.map((msg) => (
             <div 
               key={msg.id} 
@@ -269,20 +294,45 @@ const ChatInterface = () => {
             >
               <div 
                 className={`
-                  max-w-2xl w-full p-4 rounded-2xl 
+                  max-w-2xl p-4 rounded-2xl shadow-sm
                   ${msg.sender === 'user' 
                     ? 'bg-indigo-500 text-white' 
-                    : 'bg-white border border-gray-200 text-gray-800'
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200'
                   }
                 `}
               >
-                <div className="text-base leading-relaxed whitespace-pre-wrap">{msg.text}</div>
+                <div className="text-base leading-relaxed whitespace-pre-wrap">
+                  {msg.text}
+                </div>
                 {msg.sources && msg.sources.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="text-sm font-medium text-gray-500 mb-2">Sources:</div>
+                  <div className={`
+                    mt-4 pt-4 
+                    ${msg.sender === 'user' 
+                      ? 'border-t border-indigo-400' 
+                      : 'border-t border-gray-200 dark:border-gray-700'
+                    }
+                  `}>
+                    <div className={`
+                      text-sm font-medium mb-2
+                      ${msg.sender === 'user' 
+                        ? 'text-indigo-100' 
+                        : 'text-gray-500 dark:text-gray-400'
+                      }
+                    `}>
+                      Sources:
+                    </div>
                     <div className="space-y-2">
                       {msg.sources.map((source, index) => (
-                        <div key={index} className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                        <div 
+                          key={index} 
+                          className={`
+                            text-sm p-2 rounded
+                            ${msg.sender === 'user'
+                              ? 'bg-indigo-600/50 text-indigo-100'
+                              : 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300'
+                            }
+                          `}
+                        >
                           {source.source.split('/').pop()}
                         </div>
                       ))}
@@ -290,8 +340,11 @@ const ChatInterface = () => {
                   </div>
                 )}
                 <div className={`
-                  text-xs mt-2 opacity-60 
-                  ${msg.sender === 'user' ? 'text-indigo-100 text-right' : 'text-gray-500 text-left'}
+                  text-xs mt-2 opacity-60
+                  ${msg.sender === 'user' 
+                    ? 'text-indigo-100 text-right' 
+                    : 'text-gray-500 dark:text-gray-400 text-left'
+                  }
                 `}>
                   {formatTimestamp(msg.timestamp)}
                 </div>
@@ -302,7 +355,7 @@ const ChatInterface = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white p-6 border-t border-gray-200">
+        <div className="bg-white dark:bg-gray-900 p-6 border-t border-gray-200 dark:border-gray-700">
           <div className="relative">
             <textarea 
               value={inputMessage}
@@ -312,10 +365,14 @@ const ChatInterface = () => {
               rows={3}
               disabled={isProcessing}
               className={`
-                w-full p-4 pr-16 rounded-xl border border-gray-300 
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 
+                w-full p-4 pr-16 rounded-xl 
+                border border-gray-300 dark:border-gray-600 
+                bg-white dark:bg-gray-800 
+                text-gray-900 dark:text-gray-100
+                placeholder-gray-500 dark:placeholder-gray-400
+                focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 
                 resize-none transition-all duration-300
-                ${isProcessing ? 'bg-gray-50' : ''}
+                ${isProcessing ? 'bg-gray-50 dark:bg-gray-900' : ''}
               `}
             />
             <div className="absolute bottom-5 right-5 flex items-center space-x-2">
@@ -323,8 +380,9 @@ const ChatInterface = () => {
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isProcessing}
                 className={`
-                  bg-indigo-500 text-white p-2 rounded-full 
-                  hover:bg-indigo-600 transition-all duration-300 
+                  bg-indigo-500 dark:bg-indigo-600 text-white p-2 rounded-full 
+                  hover:bg-indigo-600 dark:hover:bg-indigo-700 
+                  transition-all duration-300 
                   ${!inputMessage.trim() || isProcessing 
                     ? 'opacity-50 cursor-not-allowed' 
                     : ''
@@ -336,7 +394,7 @@ const ChatInterface = () => {
             </div>
           </div>
           {isProcessing && (
-            <div className="mt-2 text-sm text-gray-500">
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Processing your request...
             </div>
           )}
