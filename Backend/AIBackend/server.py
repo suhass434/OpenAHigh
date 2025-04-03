@@ -10,6 +10,9 @@ from urllib.parse import unquote
 from pydantic import BaseModel
 from chat_utils import setup_conversation_chain, get_conversation_response
 import logging
+from metadata_extraction import process_pdf, create_excel_output
+import json
+import asyncio
 
 
 logging.basicConfig(level=logging.INFO)
@@ -122,39 +125,122 @@ async def delete_pdf(user_email: str, filename: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/upload-pdf/")
-async def upload_pdf(
-    files: List[UploadFile] = File(..., alias="file[]"),
-    userEmail: str = Form(...)
-):
+async def upload_pdf(file: List[UploadFile] = File(...), userEmail: str = Form(...)):
     try:
-        if not files:
-            raise HTTPException(status_code=400, detail="No files provided")
-        
-        
-        user_dir = ensure_user_directory(userEmail)
+        # Create user-specific directories
+        user_pdf_dir = Path(UPLOAD_FOLDER) / userEmail
+        user_pdf_dir.mkdir(exist_ok=True)
+        user_output_dir = Path("outputs") / userEmail
+        user_output_dir.mkdir(exist_ok=True)
+
         uploaded_files = []
-        
-        for file in files:
-            if file and allowed_file(file.filename):
-                filename = Path(file.filename).name
-                file_path = os.path.join(user_dir, filename)
-                
-                with open(file_path, "wb") as buffer:
-                    shutil.copyfileobj(file.file, buffer)
-                
-                uploaded_files.append(get_file_info(file_path))
-        
-        if not uploaded_files:
-            raise HTTPException(status_code=400, detail="No valid PDF files uploaded")
+        for pdf in file:
+            if not pdf.filename.lower().endswith('.pdf'):
+                raise HTTPException(status_code=400, detail=f"{pdf.filename} is not a PDF file")
             
-        return JSONResponse(
-            content={
-                "message": "Files uploaded successfully",
-                "files": uploaded_files
-            },
-            status_code=200
-        )
+            file_path = user_pdf_dir / pdf.filename
+            with file_path.open("wb") as buffer:
+                shutil.copyfileobj(pdf.file, buffer)
+            uploaded_files.append(pdf.filename)
+
+        return {"message": "Files uploaded successfully", "files": uploaded_files}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/extract-metadata/")
+async def extract_metadata(userEmail: str = Form(...)):
+    try:
+        # Ensure directories exist
+        user_pdf_dir = Path("pdfs") / userEmail
+        user_output_dir = Path("outputs") / userEmail
+        user_output_dir.mkdir(parents=True, exist_ok=True)
+
+        if not user_pdf_dir.exists():
+            raise HTTPException(status_code=404, detail="No PDFs found for processing")
+
+        output_file = user_output_dir / "extracted_metadata.xlsx"
+
+        # Process all PDFs in user's directory
+        metadata_list = []
+        pdf_files = list(user_pdf_dir.glob("*.pdf"))
         
+        if not pdf_files:
+            raise HTTPException(status_code=404, detail="No PDF files found in directory")
+
+        # Process PDFs and collect metadata
+        for pdf_path in pdf_files:
+            try:
+                result = process_pdf(pdf_path)
+                if result:
+                    metadata_list.append(result)
+            except Exception as e:
+                logger.error(f"Error processing {pdf_path}: {str(e)}")
+                continue
+
+        if not metadata_list:
+            raise HTTPException(status_code=404, detail="No metadata could be extracted from PDFs")
+
+        # Create Excel file
+        try:
+            create_excel_output(metadata_list, str(output_file))
+        except Exception as e:
+            logger.error(f"Error creating Excel file: {str(e)}")
+            raise HTTPException(status_code=500, detail="Failed to create Excel file")
+
+        return {
+            "message": "Metadata extraction completed",
+            "output_file": str(output_file),
+            "metadata": metadata_list
+        }
+
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        logger.error(f"Error in metadata extraction: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/download-metadata/{userEmail}")
+async def download_metadata(userEmail: str):
+    try:
+        # Ensure the output directory exists
+        user_output_dir = Path("outputs") / userEmail
+        user_output_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_file = user_output_dir / "extracted_metadata.xlsx"
+        
+        # Check if file exists
+        if not output_file.exists():
+            logger.error(f"Output file not found at {output_file}")
+            raise HTTPException(
+                status_code=404, 
+                detail=f"No metadata file found for {userEmail}"
+            )
+
+        # Return the file with proper headers
+        return FileResponse(
+            path=str(output_file),
+            filename="extracted_metadata.xlsx",
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={
+                "Content-Disposition": f'attachment; filename="extracted_metadata.xlsx"'
+            }
+        )
+
+    except Exception as e:
+        logger.error(f"Error downloading metadata file: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/list-pdfs/{userEmail}")
+async def list_pdfs(userEmail: str):
+    try:
+        user_pdf_dir = Path(UPLOAD_FOLDER) / userEmail
+        if not user_pdf_dir.exists():
+            return {"files": []}
+
+        files = [f.name for f in user_pdf_dir.glob("*.pdf")]
+        return {"files": files}
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

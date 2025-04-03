@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TaskLayout from './TaskLayout';
 import PDFManager from '../PDFManager';
 import { useSelector } from 'react-redux';
-import { Upload, FileDown } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import axios from 'axios';
 
 const Task1MetadataExtraction = () => {
@@ -12,7 +12,6 @@ const Task1MetadataExtraction = () => {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.auth.signupData);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
-  const [allMetadata, setAllMetadata] = useState(null);
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -22,7 +21,7 @@ const Task1MetadataExtraction = () => {
     try {
       const formData = new FormData();
       files.forEach(file => {
-        formData.append('file', file);
+        formData.append('file[]', file);
       });
       formData.append('userEmail', user.email);
 
@@ -50,31 +49,18 @@ const Task1MetadataExtraction = () => {
   };
 
   const handleExtractMetadata = async (pdfFile) => {
-    try {
-      const formData = new FormData();
-      formData.append('userEmail', user.email);
-
-      const response = await axios.post(
-        'http://localhost:5001/extract-metadata/',
-        formData
-      );
-
-      setExtractedMetadata({
-        filename: pdfFile.name,
-        metadata: response.data.metadata[0] || {
-          document_id: "Unknown",
-          affected_product: "N/A",
-          affected_assets: "N/A",
-          affected_release: "N/A",
-          fixed_release: "N/A",
-          par_number: "N/A",
-          configuration: "N/A"
-        }
-      });
-    } catch (err) {
-      console.error('Extraction error:', err);
-      setError('Failed to extract metadata. Please try again.');
-    }
+    // TODO: Implement metadata extraction logic
+    setExtractedMetadata({
+      filename: pdfFile.name,
+      metadata: {
+        title: "Sample Title",
+        author: "Sample Author",
+        creationDate: "2024-03-15",
+        modificationDate: "2024-03-15",
+        keywords: ["keyword1", "keyword2"],
+        subject: "Sample Subject"
+      }
+    });
   };
 
   const downloadCSV = () => {
@@ -84,13 +70,12 @@ const Task1MetadataExtraction = () => {
     const csvContent = [
       "Property,Value",
       `Filename,${extractedMetadata.filename}`,
-      `Document ID,${metadata.document_id}`,
-      `Affected Product,${metadata.affected_product}`,
-      `Affected Assets,${metadata.affected_assets}`,
-      `Affected Release,${metadata.affected_release}`,
-      `Fixed Release,${metadata.fixed_release}`,
-      `PAR Number,${metadata.par_number}`,
-      `Configuration,${metadata.configuration}`
+      `Title,${metadata.title}`,
+      `Author,${metadata.author}`,
+      `Creation Date,${metadata.creationDate}`,
+      `Modification Date,${metadata.modificationDate}`,
+      `Keywords,${metadata.keywords.join('; ')}`,
+      `Subject,${metadata.subject}`
     ].join("\n");
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -102,51 +87,6 @@ const Task1MetadataExtraction = () => {
     link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
-  };
-
-  const handleDownloadExcel = async () => {
-    try {
-      setError(null);
-      
-      // First, extract metadata
-      const formData = new FormData();
-      formData.append('userEmail', user.email);
-
-      // Extract metadata first
-      const extractionResponse = await axios.post(
-        'http://localhost:5001/extract-metadata/',
-        formData
-      );
-
-      // Set the metadata to display in the output window
-      setAllMetadata(extractionResponse.data.metadata);
-      
-    } catch (err) {
-      console.error('Extraction error:', err);
-      setError('Failed to extract metadata. Please try again.');
-    }
-  };
-
-  const downloadExcelFile = async () => {
-    try {
-      setError(null);
-      const response = await axios.get(
-        `http://localhost:5001/download-metadata/${user.email}`,
-        { responseType: 'blob' }
-      );
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'extracted_metadata.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Download error:', err);
-      setError('Failed to download Excel file. Please try again.');
-    }
   };
 
   return (
@@ -205,18 +145,9 @@ const Task1MetadataExtraction = () => {
 
             {/* Existing PDFs Section */}
             <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-              <div className="flex justify-between items-center mb-4">
-                <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                  Your PDFs
-                </h3>
-                <button
-                  onClick={handleDownloadExcel}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center space-x-2"
-                >
-                  <FileDown className="w-4 h-4" />
-                  <span>Extract All Metadata</span>
-                </button>
-              </div>
+              <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+                Your PDFs
+              </h3>
               <PDFManager 
                 triggerRefresh={triggerRefresh}
                 onSelectPDF={handleExtractMetadata}
@@ -244,47 +175,10 @@ const Task1MetadataExtraction = () => {
                   {Object.entries(extractedMetadata.metadata).map(([key, value]) => (
                     <div key={key} className="flex flex-col">
                       <label className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
                       </label>
                       <div className={`mt-1 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                         {Array.isArray(value) ? value.join(', ') : value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : allMetadata ? (
-              <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                    Extracted Metadata for All PDFs
-                  </h3>
-                  <button
-                    onClick={downloadExcelFile}
-                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center space-x-2"
-                  >
-                    <FileDown className="w-4 h-4" />
-                    <span>Download Excel</span>
-                  </button>
-                </div>
-
-                <div className="space-y-6">
-                  {allMetadata.map((metadata, index) => (
-                    <div key={index} className="border-b last:border-b-0 pb-4 last:pb-0">
-                      <h4 className={`text-md font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                        Document {index + 1}
-                      </h4>
-                      <div className="space-y-2">
-                        {Object.entries(metadata).map(([key, value]) => (
-                          <div key={key} className="flex flex-col">
-                            <label className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                              {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                            </label>
-                            <div className={`mt-1 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                              {Array.isArray(value) ? value.join(', ') : value}
-                            </div>
-                          </div>
-                        ))}
                       </div>
                     </div>
                   ))}
