@@ -127,7 +127,7 @@ async def delete_pdf(user_email: str, filename: str):
 @app.post("/upload-pdf/")
 async def upload_pdf(file: List[UploadFile] = File(...), userEmail: str = Form(...)):
     try:
-        # Create user-specific directories
+       
         user_pdf_dir = Path(UPLOAD_FOLDER) / userEmail
         user_pdf_dir.mkdir(exist_ok=True)
         user_output_dir = Path("outputs") / userEmail
@@ -151,7 +151,7 @@ async def upload_pdf(file: List[UploadFile] = File(...), userEmail: str = Form(.
 @app.post("/extract-metadata/")
 async def extract_metadata(userEmail: str = Form(...)):
     try:
-        # Ensure directories exist
+      
         user_pdf_dir = Path("pdfs") / userEmail
         user_output_dir = Path("outputs") / userEmail
         user_output_dir.mkdir(parents=True, exist_ok=True)
@@ -161,14 +161,14 @@ async def extract_metadata(userEmail: str = Form(...)):
 
         output_file = user_output_dir / "extracted_metadata.xlsx"
 
-        # Process all PDFs in user's directory
+       
         metadata_list = []
         pdf_files = list(user_pdf_dir.glob("*.pdf"))
         
         if not pdf_files:
             raise HTTPException(status_code=404, detail="No PDF files found in directory")
 
-        # Process PDFs and collect metadata
+      
         for pdf_path in pdf_files:
             try:
                 result = process_pdf(pdf_path)
@@ -181,7 +181,7 @@ async def extract_metadata(userEmail: str = Form(...)):
         if not metadata_list:
             raise HTTPException(status_code=404, detail="No metadata could be extracted from PDFs")
 
-        # Create Excel file
+       
         try:
             create_excel_output(metadata_list, str(output_file))
         except Exception as e:
@@ -203,13 +203,13 @@ async def extract_metadata(userEmail: str = Form(...)):
 @app.get("/download-metadata/{userEmail}")
 async def download_metadata(userEmail: str):
     try:
-        # Ensure the output directory exists
+     
         user_output_dir = Path("outputs") / userEmail
         user_output_dir.mkdir(parents=True, exist_ok=True)
         
         output_file = user_output_dir / "extracted_metadata.xlsx"
         
-        # Check if file exists
+       
         if not output_file.exists():
             logger.error(f"Output file not found at {output_file}")
             raise HTTPException(
@@ -217,7 +217,7 @@ async def download_metadata(userEmail: str):
                 detail=f"No metadata file found for {userEmail}"
             )
 
-        # Return the file with proper headers
+       
         return FileResponse(
             path=str(output_file),
             filename="extracted_metadata.xlsx",
@@ -244,7 +244,7 @@ async def list_pdfs(userEmail: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Chat models and endpoint
+
 class ChatRequest(BaseModel):
     question: str
 
