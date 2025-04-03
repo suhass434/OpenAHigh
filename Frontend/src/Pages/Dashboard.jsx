@@ -3,14 +3,25 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDarkMode } from '../Slices/themeSlice';
 import useOnClickOutside from '../hooks/useOnClickOutside';
+import { FileText, FileSpreadsheet, FileSearch } from 'lucide-react';
 
 const sidebarItems = [
-  { id: 'overview', label: 'Overview', icon: 'home' },
-  { id: 'pdfs', label: 'PDFs', icon: 'file' },
-  // { id: 'projects', label: 'Projects', icon: 'folder' },
-  { id: 'tasks', label: 'Tasks', icon: 'check-square' },
-  { id: 'calendar', label: 'Calendar', icon: 'calendar' },
-  { id: 'messages', label: 'Messages', icon: 'message-circle' },
+
+  {
+    id: 'task1',
+    label: 'PDF Metadata',
+    icon: 'fileText',
+  },
+  {
+    id: 'task2',
+    label: 'Scn',
+    icon: 'fileSpreadsheet',
+  },
+  {
+    id: 'task3',
+    label: 'Change Notice',
+    icon: 'fileSearch',
+  },
   { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
 
@@ -122,6 +133,12 @@ const Dashboard = () => {
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
         );
+      case 'fileText':
+        return <FileText className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />;
+      case 'fileSpreadsheet':
+        return <FileSpreadsheet className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />;
+      case 'fileSearch':
+        return <FileSearch className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} />;
       default:
         return null;
     }
