@@ -18,7 +18,7 @@ import PDFs from "./Components/Dashboard/PDFs"
 import Task1MetadataExtraction from './Components/Tasks/Task1MetadataExtraction';
 import Task2SoftwareCompatibility from './Components/Tasks/Task2SoftwareCompatibility';
 import Task3ChangeNotice from './Components/Tasks/Task3ChangeNotice';
-
+import ChatInterface from './Components/ChatInterface';
 function App() {
   return (
     <ThemeProvider>
@@ -39,6 +39,7 @@ function App() {
           <Route path="task1" element={<Task1MetadataExtraction />} />
           <Route path="task2" element={<Task2SoftwareCompatibility />} />
           <Route path="task3" element={<Task3ChangeNotice />} />
+          <Route path="chat" element={<ChatInterface />} />
         </Route>
       </Routes>
     </ThemeProvider>
