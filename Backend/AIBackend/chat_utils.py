@@ -8,6 +8,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
 import logging
+from fastapi import HTTPException
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -18,7 +19,11 @@ load_dotenv()
 # Define the directories
 current_dir = os.path.dirname(os.path.abspath(__file__))
 docs_dir = os.path.join(current_dir, "documents")
-persistent_directory = os.path.join(current_dir, "db", "chroma_db")
+db_dir = os.path.join(current_dir, "db", "chroma_db")
+
+# Ensure directories exist
+os.makedirs(docs_dir, exist_ok=True)
+os.makedirs(db_dir, exist_ok=True)
 
 # Custom prompt template
 CUSTOM_PROMPT = PromptTemplate(
@@ -41,76 +46,82 @@ def initialize_vector_store():
     """
     Initialize or load the vector store with document embeddings.
     """
-    persist_directory = "db/chroma_db"
-    
-    # Initialize Google's embedding model
-    embedding = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004"  # Using text-embedding-004 for embeddings
-    )
-    
-    if not os.path.exists(persist_directory):
-        print("Initializing vector store...")
+    try:
+        logger.info("Initializing embedding model...")
+        embedding = GoogleGenerativeAIEmbeddings(
+            model="models/text-embedding-004"
+        )
         
-        if not os.path.exists(docs_dir):
-            raise FileNotFoundError(f"Documents directory {docs_dir} does not exist.")
+        if not os.path.exists(os.path.join(db_dir, "chroma.sqlite3")):
+            logger.info("Creating new vector store...")
+            
+            if not any(os.scandir(docs_dir)):
+                raise FileNotFoundError(f"No documents found in {docs_dir}")
 
-        loader = DirectoryLoader(docs_dir, glob="*.txt", loader_cls=TextLoader)
-        documents = loader.load()
+            loader = DirectoryLoader(docs_dir, glob="*.txt", loader_cls=TextLoader)
+            documents = loader.load()
+            logger.info(f"Loaded {len(documents)} documents")
 
-        text_splitter = CharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            separator="\n"
-        )
-        docs = text_splitter.split_documents(documents)
+            text_splitter = CharacterTextSplitter(
+                chunk_size=1000,
+                chunk_overlap=200,
+                separator="\n"
+            )
+            docs = text_splitter.split_documents(documents)
+            logger.info(f"Split into {len(docs)} chunks")
 
-        db = Chroma.from_documents(
-            docs,
-            embedding,
-            persist_directory=persist_directory
-        )
-        return db
-    else:
-        print("Loading existing vector store...")
-        return Chroma(
-            persist_directory=persist_directory,
-            embedding_function=embedding
-        )
+            db = Chroma.from_documents(
+                docs,
+                embedding,
+                persist_directory=db_dir
+            )
+            logger.info("Vector store created successfully")
+            return db
+        else:
+            logger.info("Loading existing vector store...")
+            return Chroma(
+                persist_directory=db_dir,
+                embedding_function=embedding
+            )
+    except Exception as e:
+        logger.error(f"Error in vector store initialization: {str(e)}")
+        raise
 
 def setup_conversation_chain():
     """Set up the conversation chain with the vector store."""
     try:
+        logger.info("Setting up conversation chain...")
         vector_store = initialize_vector_store()
         
+        logger.info("Initializing language model...")
         llm = ChatGoogleGenerativeAI(
             model="gemini-2.0-flash",
             temperature=0.7,
             convert_system_message_to_human=True
         )
         
-        # Set up conversation memory with output_key
+        logger.info("Setting up conversation memory...")
         memory = ConversationBufferMemory(
             memory_key="chat_history",
-            return_messages=True,
-            output_key="answer"  # Specify which key to store in memory
+            output_key="answer",
+            return_messages=True
         )
         
-        # Create conversation chain
+        logger.info("Creating conversation chain...")
         conversation_chain = ConversationalRetrievalChain.from_llm(
             llm=llm,
             retriever=vector_store.as_retriever(search_kwargs={"k": 3}),
             memory=memory,
             combine_docs_chain_kwargs={"prompt": CUSTOM_PROMPT},
             return_source_documents=True,
-            verbose=True
+            chain_type="stuff"
         )
         
+        logger.info("Conversation chain setup complete")
         return conversation_chain
     except Exception as e:
-        return {
-            "answer": f"I apologize, but I encountered an error: {str(e)}",
-            "sources": []
-        }
+        logger.error(f"Error in conversation chain setup: {str(e)}")
+        raise
 
 def get_conversation_response(conversation_chain, question: str) -> dict:
     """
@@ -120,7 +131,6 @@ def get_conversation_response(conversation_chain, question: str) -> dict:
         logger.info("Retrieving answer from conversation chain...")
         result = conversation_chain({"question": question})
         
-        # Extract source documents
         source_docs = []
         if "source_documents" in result:
             logger.info(f"Found {len(result['source_documents'])} relevant documents")
@@ -137,7 +147,7 @@ def get_conversation_response(conversation_chain, question: str) -> dict:
         }
     except Exception as e:
         logger.error(f"Error in conversation chain: {str(e)}")
-        return {
-            "answer": f"I apologize, but I encountered an error: {str(e)}",
-            "sources": []
-        } 
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error generating response: {str(e)}"
+        ) 

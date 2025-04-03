@@ -11,6 +11,7 @@ import {
   Settings, 
   X 
 } from 'lucide-react';
+import axios from 'axios';
 
 // Sidebar Chat Item Component
 const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
@@ -53,13 +54,14 @@ const ChatInterface = () => {
   const [chats, setChats] = useState([
     { 
       id: 1, 
-      title: 'Research Project', 
+      title: 'New Chat', 
       messages: [
         { 
           id: 1, 
-          text: "Hi there! I'm your AI assistant. How can I help you today?", 
+          text: "Hi! I'm CrawlShastra's AI assistant. How can I help you today?", 
           sender: 'bot',
-          timestamp: new Date()
+          timestamp: new Date(),
+          sources: []
         }
       ]
     }
@@ -80,7 +82,7 @@ const ChatInterface = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [activeChat.messages]);
+  }, [activeChat?.messages]);
 
   // Create a new chat
   const createNewChat = () => {
@@ -93,9 +95,10 @@ const ChatInterface = () => {
         messages: [
           { 
             id: 1, 
-            text: "Hi there! I'm your AI assistant. How can I help you today?", 
+            text: "Hi! I'm CrawlShastra's AI assistant. How can I help you today?", 
             sender: 'bot',
-            timestamp: new Date()
+            timestamp: new Date(),
+            sources: []
           }
         ]
       }
@@ -108,7 +111,6 @@ const ChatInterface = () => {
     setChats(prev => {
       const remainingChats = prev.filter(chat => chat.id !== chatId);
       
-      // If deleting the active chat, switch to another or create new
       if (chatId === activeChatId) {
         if (remainingChats.length > 0) {
           setActiveChatId(remainingChats[0].id);
@@ -122,21 +124,22 @@ const ChatInterface = () => {
   };
 
   // Send message handler
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputMessage.trim()) {
-      const newMessage = {
+      const userMessage = {
         id: activeChat.messages.length + 1,
         text: inputMessage,
         sender: 'user',
-        timestamp: new Date()
+        timestamp: new Date(),
+        sources: []
       };
 
-      // Update the active chat's messages
+      // Add user message to chat
       setChats(prev => prev.map(chat => 
         chat.id === activeChatId 
           ? { 
               ...chat, 
-              messages: [...chat.messages, newMessage] 
+              messages: [...chat.messages, userMessage] 
             } 
           : chat
       ));
@@ -144,30 +147,60 @@ const ChatInterface = () => {
       setInputMessage('');
       setIsProcessing(true);
 
-      // Simulate bot response (replace with actual AI response later)
-      setTimeout(() => {
+      try {
+        // Make API call to backend
+        const response = await axios.post('http://localhost:5001/api/chat', {
+          question: inputMessage
+        });
+
+        // Add bot response to chat
         const botResponse = {
           id: activeChat.messages.length + 2,
-          text: `I'm processing your request: "${inputMessage}"`,
+          text: response.data.answer,
           sender: 'bot',
-          timestamp: new Date()
+          timestamp: new Date(),
+          sources: response.data.sources
         };
 
         setChats(prev => prev.map(chat => 
           chat.id === activeChatId 
             ? { 
                 ...chat, 
-                messages: [...chat.messages, newMessage, botResponse] 
+                messages: [...chat.messages, botResponse],
+                // Update chat title if it's the first user message
+                title: chat.messages.length <= 1 ? inputMessage.slice(0, 30) + '...' : chat.title
               } 
             : chat
         ));
+      } catch (error) {
+        console.error('Error getting response:', error);
+        
+        // Add error message to chat
+        const errorMessage = {
+          id: activeChat.messages.length + 2,
+          text: "I apologize, but I encountered an error. Please try again.",
+          sender: 'bot',
+          timestamp: new Date(),
+          sources: []
+        };
+
+        setChats(prev => prev.map(chat => 
+          chat.id === activeChatId 
+            ? { 
+                ...chat, 
+                messages: [...chat.messages, errorMessage] 
+              } 
+            : chat
+        ));
+      } finally {
         setIsProcessing(false);
-      }, 1500);
+      }
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
@@ -243,7 +276,19 @@ const ChatInterface = () => {
                   }
                 `}
               >
-                <div className="text-base leading-relaxed">{msg.text}</div>
+                <div className="text-base leading-relaxed whitespace-pre-wrap">{msg.text}</div>
+                {msg.sources && msg.sources.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="text-sm font-medium text-gray-500 mb-2">Sources:</div>
+                    <div className="space-y-2">
+                      {msg.sources.map((source, index) => (
+                        <div key={index} className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                          {source.source.split('/').pop()}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className={`
                   text-xs mt-2 opacity-60 
                   ${msg.sender === 'user' ? 'text-indigo-100 text-right' : 'text-gray-500 text-left'}
@@ -265,25 +310,15 @@ const ChatInterface = () => {
               onKeyPress={handleKeyPress}
               placeholder="Send a message..."
               rows={3}
-              className="
+              disabled={isProcessing}
+              className={`
                 w-full p-4 pr-16 rounded-xl border border-gray-300 
                 focus:outline-none focus:ring-2 focus:ring-indigo-500 
                 resize-none transition-all duration-300
-              "
+                ${isProcessing ? 'bg-gray-50' : ''}
+              `}
             />
             <div className="absolute bottom-5 right-5 flex items-center space-x-2">
-              <button 
-                onClick={handleVoiceInput}
-                className={`
-                  p-2 rounded-full transition-colors 
-                  ${isListening 
-                    ? 'bg-red-100 text-red-500' 
-                    : 'hover:bg-gray-100 text-gray-500'
-                  }
-                `}
-              >
-                <Mic className="w-5 h-5" />
-              </button>
               <button 
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isProcessing}
@@ -300,6 +335,11 @@ const ChatInterface = () => {
               </button>
             </div>
           </div>
+          {isProcessing && (
+            <div className="mt-2 text-sm text-gray-500">
+              Processing your request...
+            </div>
+          )}
         </div>
       </div>
     </div>

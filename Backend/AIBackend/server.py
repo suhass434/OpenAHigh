@@ -28,10 +28,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 UPLOAD_FOLDER = 'pdfs'
 ALLOWED_EXTENSIONS = {'pdf'}
-
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -160,7 +158,7 @@ async def upload_pdf(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Add new chat models and endpoint
+# Chat models and endpoint
 class ChatRequest(BaseModel):
     question: str
 
@@ -174,8 +172,6 @@ async def chat_endpoint(request: ChatRequest):
     Chat endpoint that uses our knowledge base to answer questions.
     """
     try:
-        logger.info(f"Received question: {request.question}")
-        
         if not request.question.strip():
             raise HTTPException(status_code=400, detail="Question cannot be empty")
             
@@ -184,19 +180,15 @@ async def chat_endpoint(request: ChatRequest):
             question=request.question
         )
         
-        logger.info(f"Generated answer: {response['answer']}")
-        logger.info(f"Used {len(response['sources'])} source documents")
-        
         return ChatResponse(
             answer=response["answer"],
             sources=response["sources"]
         )
         
     except Exception as e:
-        logger.error(f"Error processing question: {str(e)}")
         raise HTTPException(
             status_code=500,
-            detail=f"An error occurred: {str(e)}")
+            detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
