@@ -24,7 +24,7 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
   return (
     <div 
       className={`
-        group relative flex items-center justify-between p-3 cursor-pointer 
+        group relative flex items-center justify-between p-2 sm:p-3 cursor-pointer 
         ${isActive 
           ? 'bg-indigo-50 dark:bg-indigo-900/30' 
           : 'hover:bg-gray-50 dark:hover:bg-gray-800'
@@ -35,13 +35,13 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
       onMouseLeave={() => setIsHovering(false)}
       onClick={onSelect}
     >
-      <div className="flex items-center space-x-3">
-        <MessageSquare className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-        <span className="text-sm truncate max-w-[150px] text-gray-700 dark:text-gray-300">
+      <div className="flex items-center space-x-2 sm:space-x-3">
+        <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400" />
+        <span className="text-xs sm:text-sm truncate max-w-[100px] sm:max-w-[150px] text-gray-700 dark:text-gray-300">
           {chat.title || 'New Chat'}
         </span>
       </div>
-      {isHovering && (
+      {(isHovering || window.innerWidth < 640) && (
         <button 
           onClick={(e) => {
             e.stopPropagation();
@@ -49,11 +49,19 @@ const ChatListItem = ({ chat, isActive, onSelect, onDelete }) => {
           }}
           className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded-full"
         >
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
         </button>
       )}
     </div>
   );
+};
+
+// Helper function to clean source path
+const cleanSourcePath = (source) => {
+  if (!source) return '';
+  // Get just the filename from the path
+  const filename = source.split('/').pop();
+  return filename;
 };
 
 // Main Chat Interface
@@ -80,6 +88,7 @@ const ChatInterface = () => {
   const [isListening, setIsListening] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Get active chat
   const activeChat = chats.find(chat => chat.id === activeChatId);
@@ -234,16 +243,22 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white dark:bg-gray-900">
+    <div className="flex h-[calc(100vh-4rem)] bg-white dark:bg-gray-900">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+      <div className={`
+        w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 
+        flex flex-col transition-all duration-300 ease-in-out
+        fixed md:relative left-0 top-0 h-full
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        z-20
+      `}>
         {/* New Chat Button */}
         <button 
           onClick={createNewChat}
-          className="m-4 flex items-center justify-center space-x-2 bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white p-3 rounded-lg transition-colors"
+          className="m-2 sm:m-4 flex items-center justify-center space-x-2 bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white p-2 sm:p-3 rounded-lg transition-colors"
         >
-          <Plus className="w-5 h-5" />
-          <span>New Chat</span>
+          <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="text-sm sm:text-base">New Chat</span>
         </button>
 
         {/* Chat List */}
@@ -260,93 +275,61 @@ const ChatInterface = () => {
         </div>
       </div>
 
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
-        {/* Chat Header */}
-        <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-            {activeChat.title || 'New Chat'}
-          </h2>
-          <div className="flex items-center space-x-2">
-            <button 
-              onClick={() => dispatch(toggleDarkMode())}
-              className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full transition-colors"
-              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDarkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
-            <button className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full">
-              <Settings className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+      {/* Mobile Sidebar Toggle */}
+      <button 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden fixed bottom-4 left-4 z-30 p-3 rounded-full bg-indigo-500 text-white shadow-lg"
+      >
+        {sidebarOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+      </button>
 
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50 dark:bg-gray-900">
-          {activeChat.messages.map((msg) => (
-            <div 
-              key={msg.id} 
-              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {activeChat?.messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div 
-                className={`
-                  max-w-2xl p-4 rounded-2xl shadow-sm
-                  ${msg.sender === 'user' 
-                    ? 'bg-indigo-500 text-white' 
-                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200'
-                  }
-                `}
-              >
-                <div className="text-base leading-relaxed whitespace-pre-wrap">
-                  {msg.text}
-                </div>
-                {msg.sources && msg.sources.length > 0 && (
-                  <div className={`
-                    mt-4 pt-4 
-                    ${msg.sender === 'user' 
-                      ? 'border-t border-indigo-400' 
-                      : 'border-t border-gray-200 dark:border-gray-700'
-                    }
-                  `}>
-                    <div className={`
-                      text-sm font-medium mb-2
-                      ${msg.sender === 'user' 
-                        ? 'text-indigo-100' 
-                        : 'text-gray-500 dark:text-gray-400'
-                      }
-                    `}>
-                      Sources:
-                    </div>
-                    <div className="space-y-2">
-                      {msg.sources.map((source, index) => (
-                        <div 
-                          key={index} 
-                          className={`
-                            text-sm p-2 rounded
-                            ${msg.sender === 'user'
-                              ? 'bg-indigo-600/50 text-indigo-100'
-                              : 'bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300'
-                            }
-                          `}
-                        >
-                          {source.source.split('/').pop()}
-                        </div>
-                      ))}
-                    </div>
+              <div className={`
+                max-w-[85%] sm:max-w-[75%] rounded-lg p-3 sm:p-4
+                ${message.sender === 'user'
+                  ? 'bg-indigo-500 text-white'
+                  : isDarkMode
+                    ? 'bg-gray-800 text-gray-200'
+                    : 'bg-gray-100 text-gray-900'
+                }
+              `}>
+                <p className="text-sm sm:text-base whitespace-pre-wrap">{message.text}</p>
+                {message.sources && message.sources.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {message.sources.map((source, index) => (
+                      <span 
+                        key={index} 
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          message.sender === 'user'
+                            ? 'bg-indigo-400/30 text-white'
+                            : isDarkMode
+                              ? 'bg-gray-700 text-gray-300'
+                              : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        {cleanSourcePath(source.source)}
+                      </span>
+                    ))}
                   </div>
                 )}
-                <div className={`
-                  text-xs mt-2 opacity-60
-                  ${msg.sender === 'user' 
-                    ? 'text-indigo-100 text-right' 
-                    : 'text-gray-500 dark:text-gray-400 text-left'
-                  }
-                `}>
-                  {formatTimestamp(msg.timestamp)}
+                <div className="mt-1 text-xs opacity-75 text-right">
+                  {formatTimestamp(message.timestamp)}
                 </div>
               </div>
             </div>
@@ -355,49 +338,52 @@ const ChatInterface = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white dark:bg-gray-900 p-6 border-t border-gray-200 dark:border-gray-700">
-          <div className="relative">
-            <textarea 
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Send a message..."
-              rows={3}
-              disabled={isProcessing}
-              className={`
-                w-full p-4 pr-16 rounded-xl 
-                border border-gray-300 dark:border-gray-600 
-                bg-white dark:bg-gray-800 
-                text-gray-900 dark:text-gray-100
-                placeholder-gray-500 dark:placeholder-gray-400
-                focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 
-                resize-none transition-all duration-300
-                ${isProcessing ? 'bg-gray-50 dark:bg-gray-900' : ''}
-              `}
-            />
-            <div className="absolute bottom-5 right-5 flex items-center space-x-2">
-              <button 
-                onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isProcessing}
-                className={`
-                  bg-indigo-500 dark:bg-indigo-600 text-white p-2 rounded-full 
-                  hover:bg-indigo-600 dark:hover:bg-indigo-700 
-                  transition-all duration-300 
-                  ${!inputMessage.trim() || isProcessing 
-                    ? 'opacity-50 cursor-not-allowed' 
-                    : ''
-                  }
-                `}
-              >
-                <Send className="w-5 h-5" />
-              </button>
+        <div className="border-t border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="flex-1 relative">
+              <textarea
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your message..."
+                className={`w-full p-2 sm:p-3 pr-10 rounded-lg border resize-none ${
+                  isDarkMode
+                    ? 'bg-gray-800 border-gray-700 text-gray-200'
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
+                rows="1"
+                style={{ minHeight: '44px', maxHeight: '120px' }}
+              />
+              {isProcessing && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-indigo-500 border-t-transparent" />
+                </div>
+              )}
             </div>
+            <button
+              onClick={handleVoiceInput}
+              className={`p-2 rounded-lg ${
+                isListening
+                  ? 'bg-red-500 text-white'
+                  : isDarkMode
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Mic className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleSendMessage}
+              disabled={!inputMessage.trim() || isProcessing}
+              className={`p-2 rounded-lg ${
+                !inputMessage.trim() || isProcessing
+                  ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed'
+                  : 'bg-indigo-500 hover:bg-indigo-600 text-white'
+              }`}
+            >
+              <Send className="w-5 h-5" />
+            </button>
           </div>
-          {isProcessing && (
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Processing your request...
-            </div>
-          )}
         </div>
       </div>
     </div>
