@@ -1,8 +1,8 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 import os
-from typing import List, Dict
+from typing import List, Dict, Any
 import shutil
 from pathlib import Path
 from datetime import datetime
@@ -13,6 +13,9 @@ import logging
 from metadata_extraction import process_pdf, create_excel_output
 import json
 import asyncio
+from services.version_compatibility_service import process_migration, generate_migration_excel
+import pandas as pd
+from io import BytesIO
 
 
 logging.basicConfig(level=logging.INFO)
@@ -275,6 +278,57 @@ async def chat_endpoint(request: ChatRequest):
         raise HTTPException(
             status_code=500,
             detail=str(e))
+
+@app.post("/api/process_migration")
+async def process_migration_endpoint(data: Dict[Any, Any]):
+    try:
+        installed_source = data.get("installed_source")
+        source_details = data.get("source_details")
+        target_source = data.get("target_source")
+        
+        if not all([installed_source, source_details, target_source]):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        # Process migration using the version compatibility service
+        recommended_versions = process_migration(
+            installed_source=installed_source,
+            installed_versions=source_details,
+            target_version=target_source
+        )
+
+        return {"updates": recommended_versions}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/download_results")
+async def download_migration_results(data: Dict[Any, Any]):
+    try:
+        installed_source = data.get("installed_source")
+        source_details = data.get("source_details")
+        target_source = data.get("target_source")
+        
+        if not all([installed_source, source_details, target_source]):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+
+        # Generate Excel file using the version compatibility service
+        excel_bytes = generate_migration_excel(
+            installed_source=installed_source,
+            installed_versions=source_details,
+            target_version=target_source
+        )
+
+        # Return the Excel file
+        return Response(
+            content=excel_bytes.getvalue(),
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={
+                "Content-Disposition": f"attachment; filename=migration_{installed_source}_to_{target_source}.xlsx"
+            }
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
