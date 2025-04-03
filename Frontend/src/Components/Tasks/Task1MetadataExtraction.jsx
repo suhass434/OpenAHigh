@@ -13,6 +13,7 @@ const Task1MetadataExtraction = () => {
   const user = useSelector((state) => state.auth.signupData);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [allMetadata, setAllMetadata] = useState(null);
+  const [isExtracting, setIsExtracting] = useState(false);
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -107,6 +108,7 @@ const Task1MetadataExtraction = () => {
   const handleDownloadExcel = async () => {
     try {
       setError(null);
+      setIsExtracting(true);
       
       // First, extract metadata
       const formData = new FormData();
@@ -124,6 +126,8 @@ const Task1MetadataExtraction = () => {
     } catch (err) {
       console.error('Extraction error:', err);
       setError('Failed to extract metadata. Please try again.');
+    } finally {
+      setIsExtracting(false);
     }
   };
 
@@ -211,10 +215,20 @@ const Task1MetadataExtraction = () => {
                 </h3>
                 <button
                   onClick={handleDownloadExcel}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center space-x-2"
+                  disabled={isExtracting}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center space-x-2 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  <FileDown className="w-4 h-4" />
-                  <span>Extract All Metadata</span>
+                  {isExtracting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Preparing Metadata...</span>
+                    </>
+                  ) : (
+                    <>
+                      <FileDown className="w-4 h-4" />
+                      <span>Extract All Metadata</span>
+                    </>
+                  )}
                 </button>
               </div>
               <PDFManager 
@@ -255,7 +269,7 @@ const Task1MetadataExtraction = () => {
               </div>
             ) : allMetadata ? (
               <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-6">
                   <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
                     Extracted Metadata for All PDFs
                   </h3>
@@ -268,20 +282,20 @@ const Task1MetadataExtraction = () => {
                   </button>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-8">
                   {allMetadata.map((metadata, index) => (
-                    <div key={index} className="border-b last:border-b-0 pb-4 last:pb-0">
-                      <h4 className={`text-md font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <div key={index} className={`p-6 rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                      <h4 className={`text-lg font-semibold mb-4 pb-2 border-b ${isDarkMode ? 'text-gray-200 border-gray-700' : 'text-gray-800 border-gray-200'}`}>
                         Document {index + 1}
                       </h4>
-                      <div className="space-y-2">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {Object.entries(metadata).map(([key, value]) => (
                           <div key={key} className="flex flex-col">
-                            <label className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <label className={`text-sm font-medium mb-1 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                               {key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                             </label>
-                            <div className={`mt-1 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                              {Array.isArray(value) ? value.join(', ') : value}
+                            <div className={`p-3 rounded ${isDarkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-50 text-gray-800'}`}>
+                              {Array.isArray(value) ? value.join(', ') : value || 'N/A'}
                             </div>
                           </div>
                         ))}
