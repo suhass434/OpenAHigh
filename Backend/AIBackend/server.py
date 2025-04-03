@@ -2,14 +2,23 @@ from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 import os
-from typing import List
+from typing import List, Dict
 import shutil
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import unquote
+from pydantic import BaseModel
+from chat_utils import setup_conversation_chain, get_conversation_response
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+# Initialize the conversation chain at startup
+conversation_chain = setup_conversation_chain()
 
 app.add_middleware(
     CORSMiddleware,
@@ -151,6 +160,43 @@ async def upload_pdf(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Add new chat models and endpoint
+class ChatRequest(BaseModel):
+    question: str
+
+class ChatResponse(BaseModel):
+    answer: str
+    sources: List[Dict[str, str]]
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest):
+    """
+    Chat endpoint that uses our knowledge base to answer questions.
+    """
+    try:
+        logger.info(f"Received question: {request.question}")
+        
+        if not request.question.strip():
+            raise HTTPException(status_code=400, detail="Question cannot be empty")
+            
+        response = get_conversation_response(
+            conversation_chain=conversation_chain,
+            question=request.question
+        )
+        
+        logger.info(f"Generated answer: {response['answer']}")
+        logger.info(f"Used {len(response['sources'])} source documents")
+        
+        return ChatResponse(
+            answer=response["answer"],
+            sources=response["sources"]
+        )
+        
+    except Exception as e:
+        logger.error(f"Error processing question: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

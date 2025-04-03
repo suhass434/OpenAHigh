@@ -8,3 +8,6 @@ __pycache__
 *.pywz
 pdfs/
 /venv
+.env
+documents/
+db/
