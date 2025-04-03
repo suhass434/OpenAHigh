@@ -202,7 +202,7 @@ const Dashboard = () => {
           ref={sidebarRef}
           className={`${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } md:translate-x-0 fixed md:relative inset-y-0 left-0 z-20 w-64 transition-transform duration-300 ease-in-out ${
+          } md:translate-x-0 fixed md:relative inset-y-0 left-0 z-[60] w-64 transition-transform duration-300 ease-in-out ${
             isDarkMode ? 'bg-gray-800/60 backdrop-blur-sm' : 'bg-white/90 backdrop-blur-sm'
           } shadow-lg overflow-hidden pt-16 md:pt-0`}
         >
@@ -244,7 +244,7 @@ const Dashboard = () => {
         
        
         <div 
-          className={`fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden transition-opacity duration-300 ${
+          className={`fixed inset-0 bg-black bg-opacity-50 z-[55] md:hidden transition-opacity duration-300 ${
             sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
           onClick={() => setSidebarOpen(false)}
@@ -252,7 +252,7 @@ const Dashboard = () => {
        
       
         <main 
-          className={`flex-1 p-6 transition-all duration-300 z-50 ${
+          className={`flex-1 p-6 transition-all duration-300 z-[40] ${
             isDarkMode ? 'bg-gray-900/50' : 'bg-gray-50/50'
           } ${sidebarOpen ? 'md:ml-0' : 'ml-0'}`}
           style={{
