@@ -1,0 +1,41 @@
+About Honeywell
+
+Honeywell is a Fortune 100 technology company that delivers industry-specific solutions worldwide. Founded in 1906, we specialize in aerospace products and services, building technologies, performance materials, safety solutions, and industrial automation.
+
+Key Areas:
+- Aerospace
+- Building Technologies
+- Performance Materials and Technologies
+- Safety and Productivity Solutions
+
+Our Mission:
+To be the leading provider of technology solutions that improve quality of life, focusing on:
+- Safety
+- Security
+- Comfort
+- Energy Efficiency
+- Productivity
+
+Innovation:
+- Continuous investment in R&D
+- Focus on digital transformation
+- Commitment to sustainability
+- Advanced software solutions
+
+Document Management System:
+Our web application is designed to streamline document processing and management within Honeywell, featuring:
+- Automated metadata extraction
+- Software compatibility analysis
+- Change management
+- Version control
+- Approval workflows
+
+Contact Information:
+- Technical Support: support@honeywell.com
+- General Inquiries: info@honeywell.com
+- Emergency Contact: emergency@honeywell.com
+- Documentation Team: docs@honeywell.com
+
+Office Hours:
+Monday - Friday: 9:00 AM - 5:00 PM (EST)
+24/7 Emergency Support Available 

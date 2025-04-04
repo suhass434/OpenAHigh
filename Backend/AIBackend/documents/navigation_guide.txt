@@ -1,0 +1,45 @@
+Navigation Guide for CrawlShastra
+
+Main Navigation:
+1. Dashboard
+   - Overview of all tasks and recent activities
+   - Quick access to all main features
+   - Status updates and notifications
+
+2. Task Navigation:
+   - Task 1 (PDF Metadata): Access PDF processing tools
+   - Task 2 (SCN): Software compatibility analysis
+   - Task 3 (Change Notice): Document change management
+
+3. Additional Features:
+   - Calendar: Schedule and track tasks
+   - Messages: Internal communication system
+   - Settings: Customize your experience
+
+Keyboard Shortcuts:
+- Alt + 1: Navigate to Task 1
+- Alt + 2: Navigate to Task 2
+- Alt + 3: Navigate to Task 3
+- Alt + H: Return to Home
+- Alt + S: Open Settings
+
+Theme Settings:
+- Toggle between Light/Dark mode using the sun/moon icon
+- Customizable color schemes in Settings
+
+User Account:
+- Access profile settings via the top-right menu
+- Manage notifications and preferences
+- View activity history
+- Change password and security settings
+
+Quick Links:
+- Documentation: /docs
+- Support: /support
+- Contact: /contact
+- About: /about
+
+Mobile Navigation:
+- Use the hamburger menu (≡) for all options on mobile devices
+- Swipe gestures available for common actions
+- Responsive design adapts to all screen sizes 

@@ -1,0 +1,73 @@
+Welcome to CrawlShastra - Honeywell's Document Management System
+
+Welcome Message:
+Welcome to CrawlShastra, Honeywell's advanced document management and analysis platform. Our system is designed to streamline your document processing workflows, enhance metadata extraction, and ensure software compatibility across the organization.
+
+Getting Started:
+1. Log in using your Honeywell credentials
+2. Navigate to the Dashboard
+3. Choose your required task:
+   - Task 1: PDF Metadata Extraction
+   - Task 2: Software Compatibility Analysis
+   - Task 3: Change Notice Processing
+
+Frequently Asked Questions:
+
+Q: How do I upload multiple PDFs?
+A: You can either drag and drop multiple files or use the file selector in Task 1. The system supports batch processing of up to 50 files simultaneously.
+
+Q: What metadata can be extracted from PDFs?
+A: Our system extracts:
+- Title
+- Author
+- Creation date
+- Modification date
+- Keywords
+- Subject
+- Producer
+- Page count
+- File size
+- Custom metadata fields
+
+Q: How does the software compatibility analysis work?
+A: The system analyzes SCN documents to:
+- Check version compatibility
+- Identify potential conflicts
+- Generate compatibility reports
+- Suggest resolution steps
+
+Q: What is the change notice workflow?
+A: The process includes:
+1. Document submission
+2. Automated review
+3. Technical verification
+4. Management approval
+5. Publication
+
+Q: How can I track my document's status?
+A: Use the Dashboard to:
+- View real-time status updates
+- Track approval progress
+- Check review comments
+- Monitor processing status
+
+Q: Is there a file size limit?
+A: Yes:
+- Individual files: up to 100MB
+- Batch upload: up to 500MB total
+- Storage quota: 10GB per user
+
+Q: How secure is the system?
+A: We implement:
+- End-to-end encryption
+- Secure authentication
+- Role-based access control
+- Audit logging
+- Regular security updates
+
+Support:
+For additional help:
+- Use the chatbot for instant assistance
+- Contact support@honeywell.com
+- Check documentation at /docs
+- Submit bug reports through the Help menu 

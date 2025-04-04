@@ -6,8 +6,6 @@ __pycache__
 *.pyw
 *.pyz
 *.pywz
-pdfs/
+
 /venv
 .env
-documents/
-db/

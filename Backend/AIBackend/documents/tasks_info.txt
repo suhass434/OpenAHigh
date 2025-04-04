@@ -1,0 +1,40 @@
+Task 1: PDF Metadata Extraction
+- Purpose: Extract and analyze metadata from PDF documents
+- Features:
+  * Upload multiple PDF files simultaneously
+  * Extract metadata including title, author, creation date, modification date
+  * View extracted metadata in a structured format
+  * Download metadata as CSV
+  * Batch processing capabilities
+- Usage:
+  1. Navigate to Dashboard > Task 1 (PDF Metadata)
+  2. Upload PDFs using drag-and-drop or file selector
+  3. Click "Extract Metadata" for selected files
+  4. View results in the table format
+  5. Export results as needed
+
+Task 2: Software Compatibility Analysis (SCN)
+- Purpose: Analyze software compatibility notices
+- Features:
+  * Upload SCN documents
+  * Extract compatibility information
+  * Check version conflicts
+  * Generate compatibility reports
+- Usage:
+  1. Access through Dashboard > Task 2 (SCN)
+  2. Upload SCN documents
+  3. Run compatibility analysis
+  4. Review generated reports
+
+Task 3: Change Notice Processing
+- Purpose: Process and track change notices in documentation
+- Features:
+  * Track document modifications
+  * Version control
+  * Change history
+  * Approval workflow
+- Usage:
+  1. Go to Dashboard > Task 3 (Change Notice)
+  2. Create or upload change notice
+  3. Track modifications
+  4. Submit for approval 
