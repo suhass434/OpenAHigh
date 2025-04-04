@@ -1,8 +1,8 @@
-from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Response
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Response, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import shutil
 from pathlib import Path
 from datetime import datetime
@@ -16,6 +16,11 @@ import asyncio
 from services.version_compatibility_service import process_migration, generate_migration_excel
 import pandas as pd
 from io import BytesIO
+from services.scn_service import process_scn_data
+from scn_accumulation import process_scn_changes, SCNResult
+from services.chat_service import process_chat_request
+from services.metadata_service import process_metadata_request
+from services.version_service import process_version_request
 
 
 logging.basicConfig(level=logging.INFO)
@@ -328,6 +333,94 @@ async def download_migration_results(data: Dict[Any, Any]):
         )
 
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class SCNRequest(BaseModel):
+    old_version: str
+    new_version: str
+    include_features: bool = True
+    include_issues: bool = True
+
+class SCNResponse(BaseModel):
+    features: Dict[str, str] = {}
+    fixed_issues: List[Dict] = []
+    known_issues: List[Dict] = []
+    output_files: Dict[str, str] = {}
+
+@app.post("/api/scn/process", response_model=SCNResponse)
+async def process_scn(request: SCNRequest):
+    """
+    Process SCN changes between two versions.
+    Returns features, fixed issues, and known issues found in the SCN documents.
+    """
+    try:
+        result = process_scn_changes(
+            request.old_version,
+            request.new_version,
+            request.include_features,
+            request.include_issues
+        )
+        
+        # Convert DataFrames to lists of dicts for JSON serialization
+        response = SCNResponse(
+            features=result.features,
+            fixed_issues=result.fixed_issues.to_dict('records') if not result.fixed_issues.empty else [],
+            known_issues=result.known_issues.to_dict('records') if not result.known_issues.empty else [],
+            output_files=result.output_files
+        )
+        
+        return response
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/scn/files")
+async def get_scn_files():
+    """Get list of available SCN files"""
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        features_dir = os.path.join(script_dir, "data", "For_NewFeatures")
+        issues_dir = os.path.join(script_dir, "data", "For_IssuesFixed_KnownIssues")
+        
+        features_files = [f.replace(".pdf", "") for f in os.listdir(features_dir) if f.endswith('.pdf')]
+        issues_files = [f.replace(".pdf", "") for f in os.listdir(issues_dir) if f.endswith('.pdf')]
+        
+        return {
+            "features_files": sorted(features_files),
+            "issues_files": sorted(issues_files)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/scn/download/{file_path:path}")
+async def download_scn_file(file_path: str):
+    """Download a generated SCN file"""
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        output_dir = os.path.join(script_dir, "outputs")
+        file_path = os.path.join(output_dir, file_path)
+        
+        if not os.path.exists(file_path):
+            logger.error(f"File not found: {file_path}")
+            raise HTTPException(status_code=404, detail="File not found")
+            
+        # Set correct media type based on file extension
+        if file_path.endswith('.csv'):
+            media_type = "text/csv"
+        elif file_path.endswith('.pdf'):
+            media_type = "application/pdf"
+        elif file_path.endswith('.md'):
+            media_type = "text/markdown"
+        else:
+            media_type = "application/octet-stream"
+            
+        return FileResponse(
+            path=file_path,
+            filename=os.path.basename(file_path),
+            media_type=media_type
+        )
+    except Exception as e:
+        logger.error(f"Error downloading file: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

@@ -5,7 +5,6 @@ const ThemeProvider = ({ children }) => {
   const isDarkMode = useSelector(state => state.theme.darkMode);
   
   useEffect(() => {
-   
     if (isDarkMode) {
       document.documentElement.classList.add('dark-mode');
       document.documentElement.style.backgroundColor = '#111827'; 

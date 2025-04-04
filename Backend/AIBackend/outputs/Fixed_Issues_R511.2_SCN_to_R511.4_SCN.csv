@@ -1,0 +1,303 @@
+PAR,Impact,Subsystem,Description,Release,Unnamed: 0
+1-ESD7I83,"Engineering/Configuration",CE900-IO,Single Channel Download.,R520.1_TCU2_SCN,
+1-ASYXVEB,"SystemStability","StandardSeries C IOModules","Redundant DI-24V (DC-PDIL51), DI-SOE (DC-PDIS51) report OK events randomly on IOLINKviolet.",R520.1_TCU2_SCN,
+1-E9OAOLH,"SystemStability",I/O-Series C,"Series C Mark II DC-PDIL51 Module TurnsYellow after a power cycle of the system.",R520.1_TCU2_SCN,
+1-CZ28NXD,"SystemStability","FieldbusInterfaceModule-SeriesC","AO block went to 3354 error device after theFIM2 /FIM4 switchover and all the AO arefreezed.",R520.1_TCU2_SCN,
+1-EICDGNJ,"Engineering/Configuration",Control Builder,Not able to load IO Ref due to License error.,R520.1_TCU2_SCN,
+1-E8Q4OZZ,"Engineering/Configuration",Control Builder,"After download of AIREF from project the valuesPVSOURCE and PVSRCOPT do not update inMonitoring.",R520.1_TCU2_SCN,
+1-E9QUJJR,"SystemStability","FieldbusInterfaceModule","Primary FIM8 module failed with error code00D1.",R520.1_TCU2_SCN,
+1-ECGZSTH,"SystemStability",ELCN-Bridge,"ELCN Bridge not bridging anymore due to Outof Transmit buffers.",R520.1_TCU2_SCN,
+1-EDVVU7Z,"SystemStability",ELCN-Bridge,"ELCN Bridge still uses Cable A, even thoughCable A had improper connection and Cable Bwas good.",R520.1_TCU2_SCN,
+1-DNGQNEF,Usability,"ModBus TCPBlocks","PCDI PV scaling is not working as expected inSIM-C300 scaling.",R520.1_TCU2_SCN,
+1-EF6I9U9,"SystemStability","CDA-Embedded","FIM does not initiate connection with UOC, onlyUOC initiating to FIM is working.",R520.1_TCU2_SCN,
+1-E6WJ8CF,"Engineering/Configuration",CTools,"Need introduce CC-PAIH51 firmware package toSeries 8 to solve the supply chain shortage.",R520.1_TCU2_SCN,
+1-EH3B4BV,Migration,"OPM-ControllerMigration",Need to support R501.6 HF8 to R520.2 TCU2.,R520.1_TCU2_SCN,
+1-EHCHK3X,Usability,"OPM-ControllerMigration",Need to support R511.4 HF7 to R520.2 TCU2.,R520.1_TCU2_SCN,
+1-EJV6EB1,Migration,"OPM-ControllerMigration",Need to support R511.4 HF8 to R520.2 TCU2.,R520.1_TCU2_SCN,
+1-ELAJVWJ,Migration,"OPM-ControllerMigration",Need to support R511.3 HF15 to R520.2 TCU2.,R520.1_TCU2_SCN,
+1-ERO3X9B,Migration,"OPM-ControllerMigration","Migration from R520.1 TCU4/ R511.5 TCU1/R511.5 TCU2/ R511.4 HF9/R510.2 HF12 toR520.2 TCU2.",R520.1_TCU2_SCN,
+1-E8TJQRN,"Engineering/Configuration","PGM HilscherSycon .NET","Missing range definitions of parameters in GSDfile.",R520.1_TCU2_SCN,
+1-E8TJQRX,"Engineering/Configuration","PGM HilscherSycon .NET",Slot Restriction Definitions in HEX.,R520.1_TCU2_SCN,
+1-E1YPP07,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) Failed T148 after apower cycle.",R520.1_TCU2_SCN,
+1-DR2B4L3,System Stability,"C300 (CC-PCNT05)-Hardware","Secondary C300 (CC-PCNT05) failed POSTT150 IOL T177 (full cycle interrupt test)after switchover.",R520.1_TCU2_SCN,
+1-DX7RMEZ,System Stability,Procedure Explorer,"Frequently, the Procedure Explorer treeview is missing certain procedure items.",R520.1_TCU2_SCN,
+1-E1H0YA5,Usability,Procedure Explorer,"When the mouse scroll button is used, theZoom option in Procedure Explorer zoomsin.",R520.1_TCU2_SCN,
+1-E7HGG4R,Usability,Procedure Explorer,"Procedure Explorer does not allow ""drilling""into batch structure.",R520.1_TCU2_SCN,
+1-E8I9OZN,Usability,FIRMWARE,"(Error 1199) ""Alarm Reporting DeviceChanged"" after migrating toR690.1/R511.4.",R520.1_TCU2_SCN,
+1-EGNPYAJ,Usability,"ELCN ApplianceEPLCG","Some process alarms are not beingannounced by the UEA (UniversalEmbedded Appliance)-based EPLCG.",R520.1_TCU2_SCN,
+1-EHEGX39,System Stability,"ELCN ApplianceEPLCG","ELCN, UEA (Universal EmbeddedAppliance), and EPLCG alarm function isnot working.",R520.1_TCU2_SCN,
+1-E9BLI3Z,"Engineering/Configuration",C300 Controller,"Prevent unauthorized changes inController configuration.",R520.1_TCU2_SCN,
+1-EAG9FZR,Usability,"Series C UniversalIO Modules","AIH or UIO_2 module incorrectly reports theDevice Type mismatch for HART7 device.",R520.1_TCU2_SCN,
+1-DWYBT6V,Usability,EBM-Controller,"Pre-execution activities of MR becomesorphaned in two seconds with LookaheadON.",R520.1_TCU2_SCN,
+1-DZ53OZV,Usability,"Control Functions -Batch","Loss of Batch alarm flooding observedeven when no batches are executing inC300PM and C300 (CC-PCNT05).",R520.1_TCU2_SCN,
+1-E02W78X,Usability,UI Toolkit,"The dynamic re-binding of toolkit controlscan lead to hang displays.",R520.1_TCU2_SCN,
+REUCN-4728,System Stability,EHPM,"Make it possible for Enhanced High-Performance Process Manager to use analternative Level 1 switch(es) instead ofbeing forced to use a CF9.",R520.1_TCU2_SCN,
+1-E9I4LA5,"Engineering/Configuration",Control Builder,"When performing an update to the Project,error: EHI_E_INT 10527 occurs.",R520.1_TCU2_SCN,
+REUCN-5070,Usability,EHPM,"EHPM (Enhanced High-PerformanceProcess Manager) AI (Analog Input) point ishaving station display issue's as perdescription.",R520.1_TCU2_SCN,
+1-E8189NX,Usability,"CAB-Embedded-Runtime","CAB data type implicit conversion fromUINT8/UINT16 to INT32 not working.",R520.1_TCU2_SCN,
+1-EEAFPRV,System Stability,"ELCN ApplianceEPLCG","After flashing backup ELCN EPLCG, thenative window displays the state as ""NotLoaded"" and ""OFF.""",R520.1_TCU2_SCN,
+1-EE7SN4B,System Stability,"ModBus TCPBlocks","C300 failed with following errors: 03A9 and00D1.",R520.1_TCU2_SCN,
+1-EFRBRVB,System Stability,"ModBus TCPBlocks","Readback PV values from PCDI numericarray channels are getting swapped forlong and float.",R520.1_TCU2_SCN,
+1-E3AWTI5,"Engineering/Configuration",EHPM_Tools,"When importing data from the ERDB(Engineering repository database) thatincluded P2P references with C300, theBADOCFL parameter of the EHPM(Enhanced High-Performance ProcessManager) does not work.",R520.1_TCU2_SCN,
+1-EIJAXGB,Migration,EIM - Platform,"Incompatible RDN IP address on newerfirmware, prevents migration when deviceindex >= 255.",R520.1_TCU2_SCN,
+1-EIPBH6P,System Stability,CEE-Database,"Dual failure during download of CM(Control Module) containing messageblock logic.",R520.1_TCU2_SCN,
+1-DUO1HAB,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) New Primary isreporting an unexpected “Memory BackupAssembly Warning.”",R520.1_TCU2_SCN,
+1-EAOIF2L,Usability,"ELCN ApplianceEPLCG","UEA (Universal Embedded Appliance)EPLCG requires power cycle after flashingnew firmware.",R520.1_TCU2_SCN,
+REUCN-5229,Usability,C300PM,"CL Phase Alarm behavior difference inboth EHPM (Enhanced High-PerformanceProcess Manager) and C300PM.",R520.1_TCU2_SCN,
+REUCN-4905,Usability,C300PM,"Post RR,C300PM CEE-PID writing data toPPX AO (PMIO) via EUCNOUT hasINITMAN ON permanently.",R520.1_TCU2_SCN,
+1-E3D54U7,"Engineering/Configuration","CDA-Control DataAccess","ICPP communication between C300 (CC-PCNT05)-C300 (CC-PCNT05), C300PM-C300PM , C300 (CC-PCNT05)-C300PMfails.",R520.1_TCU2_SCN,
+1-EXQ99CX,"Engineering/Configuration",PDA,"Enable Profibus Integration [PGM] withUOC.",R520.1_TCU3_SCN,
+1-EJYYPEL,Migration,"OPM-ControllerMigration","Migration support for Cx-PPIX01 with Appversion 04.03.35 is missing from R430.1onwards.",R520.1_TCU3_SCN,
+1-DWDGZQL,"SystemStability",UOC-SERIES-A,"After conversion from C200 to UOC SeriesA IOM's -TC-ODA161 - V2.3 failing tocommunicate.",R520.1_TCU3_SCN,
+1-EE7WQ7V,"SystemStability",C300 Controller,"The C300 Module should alarm if thepartner has a better view of the network.",R520.1_TCU3_SCN,
+1-EVONW9X,"SystemStability",ELCN-Bridge,"ELCN Bridge LCNI fails to completeissues commands.",R520.1_TCU3_SCN,
+1-EELKZWF,"SystemStability",CF-Control Function,"ACE failure was observed during ACEcutover in R500.2 patch 13.",R520.1_TCU3_SCN,
+1-EOQPPBL,"SystemStability",Control Builder,"If the OPTDIR parameter is unchecked inthe PCR window, OPDIR is changed.",R520.1_TCU3_SCN,
+1-E2YOI9F,"Engineering/Configuration","Control Builder-Fieldbus","While importing Rosemount device DDfiles, the control builder is crashing.",R520.1_TCU3_SCN,
+1-E2J3ND6,"SystemStability",System Repository,"CDA disconnect and server switch overduring SRDB type updates.",R520.1_TCU3_SCN,
+1-E7WD4AB,"SystemStability","Control Functions -Batch","With Dynamic Fetch enabled transitionsevaluation order may be unexpected.",R520.1_TCU3_SCN,
+1-EQ7MODZ,Migration,"OPM-ControllerMigration","Need to support R511.3 HF18 to R520.2TCU3.",R520.1_TCU3_SCN,
+1-EX987N7,"Engineering/Configuration","Control Builder-Profibus","[C300v5-PGM]Unable to configure morethan 4 PGM connections with C300v5.",R520.1_TCU3_SCN,
+1-EY2U6ZX,"Engineering/Configuration",PGM,"Unable to configure more than 4 PGMconnections with C300v5 (PCNT05).",R520.1_TCU3_SCN,
+1-F00ZR6N,"SystemStability",EHPM,"LOC (loss of control) and LOV (loss ofview) occurs when the EHPM runs withhigh P2P traffic and UCN data access.",R520.1_TCU3_SCN,
+1-EPF3PIV,"Engineering/Configuration","Control Builder-Load/Upload/Update","Yellow triangle appears after upload andupdate to project while using Projectedparameters connection between CMs.",R520.1_TCU3_SCN,
+1-EBCHOB7,"SystemStability",PGM,"[PCT] The PIOMB-AI module reported acommunication error and RTNed(returned) after 1 sec during a stable run.",R520.1_TCU3_SCN,
+1-EPB8R8D,"SystemStability",EHPM,"EHPM has an IP address conflict with itspartner when updating firmware fromnon-Experion to Experion.",R520.1_TCU3_SCN,
+1-ES7W86B,"SystemStability",CEUOC-Platform,"Save UOC diagnostic data to NVS when atask monitor fault is detected.",R520.1_TCU3_SCN,
+1-ES3THSH,"SystemStability",CEUOC-Platform,"Controller must ensure redundancy-application communication is availablefor coordination.",R520.1_TCU3_SCN,
+1-ERSU45K,Usability,Firmware,"EHPM points have reverse videos on theHMI display during checkpointingoperations.",R520.1_TCU3_SCN,
+REUCN-5873,"SystemStability",EHPM,"Frequent LOV (loss of view) in HMI Webdisplay with IO parameters from legacyEHPM that are loaded to PCT limits.",R520.1_TCU3_SCN,
+1-EU4FJE5,"SystemStability",PGM,"PROFIBUS Inputs at DSBs are droppedduring slave failover.",R520.1_TCU3_SCN,
+1-EY77YFP,"SystemStability",PGM,Profibus Network Freeze on Inputs.,R520.1_TCU3_SCN,
+RELCN-3290,"SystemStability",UVA FTE,"Dual FTE failure of the BACKUP EXSIhost results in LOV (loss of view) on theENIM node and LOC (loss of control) onthe AM node.",R520.1_TCU3_SCN,
+1-EK3TBP4,"SystemStability","CDA-Control DataAccess",SN2023-06-22 01B.,R520.1_TCU3_SCN,
+1-EHR5MVM,"Engineering/Configuration",ELCN DB Import Utility,"A parameter mismatch is observedbetween the CB project and themonitoring side for the LLMUX point.",R520.1_TCU3_SCN,
+1-E3VQIS1,"SystemStability",CEUOC-Platform,"Implement diagnostics on the UOC (UnitOperations Controller) to betterunderstand BI hardware watchdog faults(panic capture).",R520.1_TCU3_SCN,
+1-E8WMWQR,"Engineering/Configuration",Control Builder,"Enhancement to the inactivation of thecontroller's CEE from the monitoring side.",R520.1_TCU3_SCN,
+1-E98F7WL,"Engineering/Configuration",Control Builder Tools,"The ELCN database import tool is failingto import LLMUX points in R511.5.",R520.1_TCU3_SCN,
+1-DODJI3B,"SystemStability",Control Builder-Chart,"Moving LOGIC gates (Nothing Loaded)control builder application failure onR511.4.",R520.1_TCU3_SCN,
+1-EEC79WN,"Engineering/Configuration",IEC61850_Tools,EIM Config limit issue with ConfRev.,R520.1_TCU3_SCN,
+1-EDAGW39,"Engineering/Configuration",ELCN DB Import Utility,"ELCN DB Import Utility Tools failed tomeet demand during the bulk import ofEHPMs.",R520.1_TCU3_SCN,
+1-EES6TKP,"Engineering/Configuration",ELCN DB Import Utility,Issues with ELCN Import Utility log file.,R520.1_TCU3_SCN,
+1-E48LYZZ,"SystemStability",EBM-Tools,"UnitClsID is not unique, eliminating unitclass validation could cause runtimeissues with the wrong unit.",R520.1_TCU3_SCN,
+1-DAGHVYP,Usability,"Server - Displays -General","Active state on all digital faceplatesopened, the OTP is hard to read aftermigration to R511.3.",R520.1_TCU3_SCN,
+1-ELF6YGL,Usability,I/O-Series 8,"Integrate Series C Mark II Non-HART AO(CC-PAON01) to PC/LX and Experion -supply chain shortage.",R520.1_TCU3_SCN,
+1-DEWGGZF,"SystemStability",I/O-Series 8,"Excessive AO Channel Initialization Time(Series C AOH1M).",R520.1_TCU3_SCN,
+1-DZKBE0D,Usability,EHPM_Tools,"Allow DEB operations check box in theEHPM Platform block is not retaining theselected option.",R520.1_TCU3_SCN,
+RELCN-3218,"SystemStability",ENIM,"Backup ENIM went to a FAIL state after76 swaps during automated UEA ENIMswaps.",R520.1_TCU3_SCN,
+1-ET1EBA7,Usability,CF-Control Function,"PV Off Normal On-Delay Time is notfunctioning versus configured time",R520.1_TCU3_SCN,
+1-EN461BH,Usability,I/O-Series 8,"The DO Driver chips on the 8C-PDODA1have been EOL, need to refresh the HWand FW.",R520.1_TCU3_SCN,
+1-EN4D82B,Usability,I/O-Series C,"The DO Driver chips on the DC-PDOD51have been EOL, need to refresh the HWand FW.",R520.1_TCU3_SCN,
+1-EYZFHQ5,Migration,"OPM-ControllerMigration","Need to support R511.4 HF10, R511.4HF11, R511.5 TCU3 to R520.2 TCU3.",R520.1_TCU3_SCN,
+1-DNF2N4P,"SystemStability",EBM-Tools,"Data Block crash when attempting tomodify a parameter inside.",R520.1_TCU3_SCN,
+1-EELKZWF,"SystemStability",CF-Control Function,"ACE failure was observed during ACECutover in R500.2 patch 13.",R520.1_TCU3_SCN,
+1-EZD1EMR,"Engineering/Configuration",Control Builder-Delete,"If we delete CM containing Series 8 IOchannels, then the deleted channelscannot be reused.",R520.1_TCU3_SCN,
+1-EFT8RIP,"SystemStability",EIP-COMMUNICATION,"EIP process was stuck in an infinite loopafter it took over as primary and failed.",R520.1_TCU3_SCN,
+1-EYNIO47,"SystemStability",Firmware,"LOV (loss of view) occurs when PrimaryEHPM (Enhanced High-PerformanceProcess Manager) with Experionintegrated firmware swaps over (###DUAL ROLE EXISTS ###) (duplicate IPaddress during swap).",R520.1_TCU3_SCN,
+1-F00ZR6N,"SystemStability",EHPM,"LOC (Loss of control) and LOV (Loss of view) occurs whenthe EHPM (Enhanced High-Performance ProcessManager) runs with high P2P traffic and UCN data access.",R520.1_TCU3_SCN,
+1-EPB8R8D,"SystemStability",EHPM,"EHPM (Enhanced High-Performance Process Manager)has an IP address conflict with its partner when updatingfirmware from non-Experion to Experion.",R520.1_TCU3_SCN,
+1-EYNIO47,"SystemStability",Firmware,"LOV (loss of view) occurs when Primary EHPM (EnhancedHigh-Performance Process Manager) with Experionintegrated firmware swaps over (### DUAL ROLE EXISTS###) (duplicate IP address during swap).",R520.1_TCU3_SCN,
+1-EBCHOB7,"SystemStability",PGM,"During a stable run, the PIOMB-AI modulereported a communication error and returnedafter 1 second.",R520.1_TCU3_SCN,
+1-EX987N7,"Engineering/Configuration","ControlBuilder-Profibus","[C300v5-PGM] Unable to configure More than 4PGM connections with C300v5",R520.1_TCU3_SCN,
+1-EY2U6ZX,"Engineering/Configuration",PGM,"Unable to configure more than 4 PGMconnections with C300v5 (PCNT05)",R520.1_TCU3_SCN,
+1-ESD7I83,"Engineering/Configuration",CE900-IO,Single Channel Download.,R520.1_TCU3_SCN,
+1-ASYXVEB,"SystemStability","Standard SeriesC IO Modules","Redundant DI-24V (DC-PDIL51), DI-SOE (DC-PDIS51) report OK events randomly on IOLINKviolet.",R520.1_TCU3_SCN,
+1-E9OAOLH,"SystemStability",I/O-Series C,"Series C Mark II DC-PDIL51 Module Turns Yellowafter a power cycle of the system.",R520.1_TCU3_SCN,
+1-CZ28NXD,"SystemStability","FieldbusInterfaceModule-SeriesC","AO block went to 3354 error device after theFIM2 /FIM4 switchover and all the AO arefreezed.",R520.1_TCU3_SCN,
+1-EICDGNJ,"Engineering/Configuration",Control Builder,Not able to load IO Ref due to License error.,R520.1_TCU3_SCN,
+1-E8Q4OZZ,"Engineering/Configuration",Control Builder,"After download of AIREF from project the valuesPVSOURCE and PVSRCOPT do not update inMonitoring.",R520.1_TCU3_SCN,
+1-E9QUJJR,"SystemStability","FieldbusInterfaceModule","Primary FIM8 module failed with error code00D1.",R520.1_TCU3_SCN,
+1-ECGZSTH,"SystemStability",ELCN-Bridge,"ELCN Bridge not bridging anymore due to Out ofTransmit buffers.",R520.1_TCU3_SCN,
+1-EDVVU7Z,"SystemStability",ELCN-Bridge,"ELCN Bridge still uses Cable A, even thoughCable A had improper connection and Cable Bwas good.",R520.1_TCU3_SCN,
+1-DNGQNEF,Usability,"ModBus TCPBlocks","PCDI PV scaling is not working as expected inSIM-C300 scaling.",R520.1_TCU3_SCN,
+1-EF6I9U9,"SystemStability","CDA-Embedded","FIM does not initiate connection with UOC, onlyUOC initiating to FIM is working.",R520.1_TCU3_SCN,
+1-E6WJ8CF,"Engineering/Configuration",CTools,"Need introduce CC-PAIH51 firmware package toSeries 8 to solve the supply chain shortage.",R520.1_TCU3_SCN,
+1-EH3B4BV,Migration,"OPM-ControllerMigration",Need to support R501.6 HF8 to R520.2 TCU2.,R520.1_TCU3_SCN,
+1-EHCHK3X,Usability,"OPM-ControllerMigration",Need to support R511.4 HF7 to R520.2 TCU2.,R520.1_TCU3_SCN,
+1-EJV6EB1,Migration,"OPM-ControllerMigration",Need to support R511.4 HF8 to R520.2 TCU2.,R520.1_TCU3_SCN,
+1-ELAJVWJ,Migration,"OPM-ControllerMigration",Need to support R511.3 HF15 to R520.2 TCU2.,R520.1_TCU3_SCN,
+1-ERO3X9B,Migration,"OPM-ControllerMigration","Migration from R520.1 TCU4/ R511.5 TCU1/R511.5 TCU2/ R511.4 HF9/R510.2 HF12 toR520.2 TCU2.",R520.1_TCU3_SCN,
+1-E8TJQRN,"Engineering/Configuration","PGM HilscherSycon .NET","Missing range definitions of parameters in GSDfile.",R520.1_TCU3_SCN,
+1-E8TJQRX,"Engineering/Configuration","PGM HilscherSycon .NET",Slot Restriction Definitions in HEX.,R520.1_TCU3_SCN,
+1-E1YPP07,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) Failed T148 after apower cycle.",R520.1_TCU3_SCN,
+1-DR2B4L3,System Stability,"C300 (CC-PCNT05)-Hardware","Secondary C300 (CC-PCNT05) failed POSTT150 IOL T177 (full cycle interrupt test)after switchover.",R520.1_TCU3_SCN,
+1-DX7RMEZ,System Stability,Procedure Explorer,"Frequently, the Procedure Explorer treeview is missing certain procedure items.",R520.1_TCU3_SCN,
+1-E1H0YA5,Usability,Procedure Explorer,"When the mouse scroll button is used, theZoom option in Procedure Explorer zoomsin.",R520.1_TCU3_SCN,
+1-E7HGG4R,Usability,Procedure Explorer,"Procedure Explorer does not allow ""drilling""into batch structure.",R520.1_TCU3_SCN,
+1-E8I9OZN,Usability,FIRMWARE,"(Error 1199) ""Alarm Reporting DeviceChanged"" after migrating toR690.1/R511.4.",R520.1_TCU3_SCN,
+1-EGNPYAJ,Usability,"ELCN ApplianceEPLCG","Some process alarms are not beingannounced by the UEA (UniversalEmbedded Appliance)-based EPLCG.",R520.1_TCU3_SCN,
+1-EHEGX39,System Stability,"ELCN ApplianceEPLCG","ELCN, UEA (Universal EmbeddedAppliance), and EPLCG alarm function isnot working.",R520.1_TCU3_SCN,
+1-E9BLI3Z,"Engineering/Configuration",C300 Controller,"Prevent unauthorized changes inController configuration.",R520.1_TCU3_SCN,
+1-EAG9FZR,Usability,"Series C UniversalIO Modules","AIH or UIO_2 module incorrectly reports theDevice Type mismatch for HART7 device.",R520.1_TCU3_SCN,
+1-DWYBT6V,Usability,EBM-Controller,"Pre-execution activities of MR becomesorphaned in two seconds with LookaheadON.",R520.1_TCU3_SCN,
+1-DZ53OZV,Usability,"Control Functions -Batch","Loss of Batch alarm flooding observedeven when no batches are executing inC300PM and C300 (CC-PCNT05).",R520.1_TCU3_SCN,
+1-E02W78X,Usability,UI Toolkit,"The dynamic re-binding of toolkit controlscan lead to hang displays.",R520.1_TCU3_SCN,
+REUCN-4728,System Stability,EHPM,"Make it possible for Enhanced High-Performance Process Manager to use analternative Level 1 switch(es) instead ofbeing forced to use a CF9.",R520.1_TCU3_SCN,
+1-E9I4LA5,"Engineering/Configuration",Control Builder,"When performing an update to the Project,error: EHI_E_INT 10527 occurs.",R520.1_TCU3_SCN,
+REUCN-5070,Usability,EHPM,"EHPM (Enhanced High-PerformanceProcess Manager) AI (Analog Input) point ishaving station display issue's as perdescription.",R520.1_TCU3_SCN,
+1-E8189NX,Usability,"CAB-Embedded-Runtime","CAB data type implicit conversion fromUINT8/UINT16 to INT32 not working.",R520.1_TCU3_SCN,
+1-EEAFPRV,System Stability,"ELCN ApplianceEPLCG","After flashing backup ELCN EPLCG, thenative window displays the state as ""NotLoaded"" and ""OFF.""",R520.1_TCU3_SCN,
+1-EE7SN4B,System Stability,"ModBus TCPBlocks","C300 failed with following errors: 03A9 and00D1.",R520.1_TCU3_SCN,
+1-EFRBRVB,System Stability,"ModBus TCPBlocks","Readback PV values from PCDI numericarray channels are getting swapped forlong and float.",R520.1_TCU3_SCN,
+1-E3AWTI5,"Engineering/Configuration",EHPM_Tools,"When importing data from the ERDB(Engineering repository database) thatincluded P2P references with C300, theBADOCFL parameter of the EHPM(Enhanced High-Performance ProcessManager) does not work.",R520.1_TCU3_SCN,
+1-EIJAXGB,Migration,EIM - Platform,"Incompatible RDN IP address on newerfirmware, prevents migration when deviceindex >= 255.",R520.1_TCU3_SCN,
+1-EIPBH6P,System Stability,CEE-Database,"Dual failure during download of CM(Control Module) containing messageblock logic.",R520.1_TCU3_SCN,
+1-DUO1HAB,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) New Primary isreporting an unexpected “Memory BackupAssembly Warning.”",R520.1_TCU3_SCN,
+1-EAOIF2L,Usability,"ELCN ApplianceEPLCG","UEA (Universal Embedded Appliance)EPLCG requires power cycle after flashingnew firmware.",R520.1_TCU3_SCN,
+REUCN-5229,Usability,C300PM,"CL Phase Alarm behavior difference inboth EHPM (Enhanced High-PerformanceProcess Manager) and C300PM.",R520.1_TCU3_SCN,
+REUCN-4905,Usability,C300PM,"Post RR,C300PM CEE-PID writing data toPPX AO (PMIO) via EUCNOUT hasINITMAN ON permanently.",R520.1_TCU3_SCN,
+1-E3D54U7,"Engineering/Configuration","CDA-Control DataAccess","ICPP communication between C300 (CC-PCNT05)-C300 (CC-PCNT05), C300PM-C300PM , C300 (CC-PCNT05)-C300PMfails.",R520.1_TCU3_SCN,
+1-EV7PVBV,"Engineering/Configuration",Control Builder,"In the download of AOREF from theproject, the values mode, modeperm,and nmode do not update inMonitoring.",R520.1_TCU4_SCN,
+RELCN-3297,System Stability,ELCN_Appliance_ENIM,"Primary ENIM (Enhanced NetworkInterface Module) failed, andsecondary ENIM (Enhanced NetworkInterface Module) did not take over,resulting in a LOV (Loss of View).",R520.1_TCU4_SCN,
+REUCN-7093,Usability,EHPMX,"Eventlogs are flooding with ""xilinx-zynq local4.err pdt[728]:clsZmqBase.""",R520.1_TCU4_SCN,
+1-EPFOFJT,System Stability,IEC61850_Embedded,"EIM (Ethernet Interface Module) isused as IEC61850, and both ETH-ports are silent.",R520.1_TCU4_SCN,
+1-ETKD3LB,System Stability,ModBus TCP Blocks,"The C3000 failed with an error code00D1 due to PCDI shared memorycorruption.",R520.1_TCU4_SCN,
+1-EVDYZ2U,System Stability,PGM,"PROFIBUS during connection holdtime triggers an event.",R520.1_TCU4_SCN,
+1-EYGNFSX,Usability,EBM-Controller,"When transterm and hold occur atthe same time, the recipe does notproceed to the next step.",R520.1_TCU4_SCN,
+1-DN7VOWG,System Stability,CE900-IO,"SCA-CE900-DO remains ON anddoes not take an OFF commandwhen the DO Open Wire Alarm isenabled on DO-DIO SCA.",R520.1_TCU4_SCN,
+1-75QOLRN,"Engineering/Configuration","Control Builder-Load/Upload/Update","In PCR Dlg (Dialog), the load frommonitoring with the parameterdeselected still gets updated into thecontroller.",R520.1_TCU4_SCN,
+1-F1EXDI7,System Stability,ELCN Appliance ENIM,"UVA (Universal Virtual Appliance)ENIMs (Enhanced Network InterfaceModule) experience periodic RDN(Redundant) timeouts.",R520.1_TCU4_SCN,
+RELCN-3130,System Stability,ELCN_Appliance_ENIM,"vELCN ENIM (Enhanced NetworkInterface Module) Secondary failedduring extended runtime.",R520.1_TCU4_SCN,
+1-F1F6AG3,System Stability,ELCN Appliance EPLCG,"ELCN and EPLCG stop sendingdigital change alarms, or EIPs, onheavily loaded systems.",R520.1_TCU4_SCN,
+1-F1FM3SP,System Stability,ELCN Appliance EPLCG,"Process alarms misbehave in PE forELCN EPLCG (UEA) tags, and alarmsare not reporting.",R520.1_TCU4_SCN,
+RELCN-3670,System Stability,ELCN Appliance ENIM,"BKUP (Backup) ENIM (EnhancedNetwork Interface Module) failed withan OPSTAT busy timeout during thestable run.",R520.1_TCU4_SCN,
+1-F1GL1RD,Migration,ELCN Appliance EPLCG,"Migration from EPLCG to UEA(Universal Embedded Appliance)EPLCG failed during the loadingcheckpoint.",R520.1_TCU4_SCN,
+1-F1UVMS7,System Stability,EIP-COMMUNICATION,"The controller does not handle ifoptional sock address information isnot sent by the device in the Forwardopen response.",R520.1_TCU4_SCN,
+1-F8C7O3P,System Stability,CEUOC-Platform,"During initial synchronization, CEPdevices get stuck at 12% after a longperiod of stable dropsynchronization.",R520.1_TCU4_SCN,
+1-F8U9CHF,Migration,EHPM_Tools,"EHPM Auto Import Service is notstarting after migrating to R520.2TCU3.",R520.1_TCU4_SCN,
+REUCN-7093,Usability,EHPMX,"Eventlogs are flooding with ""xilinx-zynq local4.err pdt[728]:clsZmqBase.""",R520.1_TCU4_SCN,
+RELCN-3733,System Stability,"ELCN_Appliance_Common","On-process recovery method forELCN nodes stuck in ConfigWait dueto failed IPC communications on theprimary.",R520.1_TCU4_SCN,
+REUCN-6548,System Stability,C300PM,"EHPM (Enhanced High-PerformanceProcess Manager) is failing with anerror: 06C4, when EHPM (EnhancedHigh-Performance Process Manager)and C300PM Automated Swap runand Stability.",R520.1_TCU4_SCN,
+1-FA4VHS1,Migration,"OPM-ControllerMigration","R511.3HF16/17 Ver-rev entries andfolder contents are missing for allcontrollers in R520.2TCU3.",R520.1_TCU4_SCN,
+RELCN-3795,System Stability,ELCN Bridge,"Enhance ELCN Bridge LCN cablediagnostics to appear in the ControlBuilder and Event.",R520.1_TCU4_SCN,
+RCEPROC-1301,Usability,CE900IO,"ControlEdge900 IO-structureparameter (VALSTAT) channel statusbyte of pulse and frequency channelsshows status Good even afterinactivating or deleting the CM.",R520.1_TCU4_SCN,
+1-F8T3KEM,System Stability,CDA-Embedded,"The single step is not working whenjumping from a parallel section to asingle section.",R520.1_TCU4_SCN,
+1-FBMEU98,System Stability,C300 Controller,"After migrating controllers to R520.2,TCU 3 received a ""Partner DisplayConnections Degraded"" alarm.",R520.1_TCU4_SCN,
+1-FAN4FQ1,System Stability,PDA,"PGM (PROFIBUS Gateway Module)PDA (Process Data Access) bufferleak.",R520.1_TCU4_SCN,
+1-FBBCI1B,System Stability,PDA,"PIOMB is unable to write to DSB aftera communication error.",R520.1_TCU4_SCN,
+RELCN-3826,System Stability,ELCN_Bridge,"LCN Cable testing failure in UEA(Universal Embedded Appliance)BRG (Bridge).",R520.1_TCU4_SCN,
+RELCN-3731,System Stability,ELCN_Appliance_ENIM,"The automatic re-enablement ofredundancy auto-synchronization inUEA (Universal Embedded Appliance)ENIM (Enhanced Network InterfaceModule) is causing event logflooding.",R520.1_TCU4_SCN,
+RELCN-3788,System Stability,ELCN Bridge,"Relax the default trip point andprovide a configurable trip point forthe error rate.",R520.1_TCU4_SCN,
+RELCN-3789,System Stability,ELCN Bridge,"Prevent failover of ELCN Bridgeunless sync'd (Synchronized) for atleast 180 secs when failover is beingforced.",R520.1_TCU4_SCN,
+RELCN-3790,System Stability,ELCN Bridge,"Provide the option to disable LCNfault handling for maintenancetroubleshooting and increase thesecondary delay when failover occursdue to LCN cable errors to avoid adual primary.",R520.1_TCU4_SCN,
+1-F04422J,System Stability,ELCN Appliance ENIM,"Backup UEA (Universal EmbeddedAppliance) ENIM (Enhanced NetworkInterface Module) failed right afterprimary UEA (Universal EmbeddedAppliance) ENIM (Enhanced NetworkInterface Module) was shut down,causing a LOV (loss of view).",R520.1_TCU4_SCN,
+1-FCGTGJT,System Stability,C300v5-Hardware,"Update C300v5 FPGA to latestRxFilter logic, fixes incorrect ratelimiting on FTE (Fault TolerantEthernet) network.",R520.1_TCU4_SCN,
+1-ECBW2XR,System Stability,"ModBus TCPInfrastructure","If two or more arrays are writing tothe same Modbus address/index, thearrays may stop writing/free.",R520.1_TCU4_SCN,
+RELCN-3713,System Stability,ELCNNODE,"ELCNNODE UVA (Universal VirtualAppliance) is not loading, and theLCN number remains 0 even afterloading.",R520.1_TCU4_SCN,
+RELCN-3508,System Stability,Virtual ENIM,"UVA (Universal Virtual Appliance)ENIM (Enhanced Network InterfaceModule) fails while deploying theUnsigned OVF template & goes toNO DB while deploying the SignedOVF Template.",R520.1_TCU4_SCN,
+RELCN-3898,System Stability,ELCN Bridge,"Dual FTE (Fault Tolerant Ethernet)cable removal causes backup to getprimary IP, causing dual primary.",R520.1_TCU4_SCN,
+1-FCLQB83,System Stability,Software,"The backup module fails tosynchronize to the primary after 300days of runtime during upgrades,compromising OPM.",R520.1_TCU4_SCN,
+1-FGFC8Q9,System Stability,ELCN-Bridge,"The ELCN Bridge experienced a dualprimary condition, if errors exist onboth LCN cables.",R520.1_TCU4_SCN,
+1-FAN4FQ1,"SystemStability",PDA,PGM PDA buffer leak.,R520.1_TCU4_SCN,
+1-FBBCI1B,"SystemStability",PDA,"PIOMB is unable to write to DSB after a communicationerror.",R520.1_TCU4_SCN,
+1-DN7VOWG,"SystemStability",CE900-IO,"SCA-CE900-DO remains ON and does not take OFFcommand when DO Open Wire Alarm is enabled on DO-DIO SCA.",R520.1_TCU4_SCN,
+1-F1FM3SP,"SystemStability","ELCNApplianceEPLCG","Process alarms misbehavior for ELCN EPLCG (UEA)tags and alarms are not reporting.",R520.1_TCU4_SCN,
+1-F1F6AG3,"SystemStability","ELCNApplianceEPLCG","ELCN EPLCG stops sending digital change alarms,or EIPs, on a heavily loaded system.",R520.1_TCU4_SCN,
+1-FA4VHS1,Migration,"OPM-ControllerMigration","[M&I] R511.3HF16/17 Ver-rev entries and foldercontents are missing for all controllers inR520.2TCU3.",R520.1_TCU4_SCN,
+1-ETKD3LB,"SystemStability","ModBus TCPBlocks","C300 failed with an error 00D1 due to PCDIshared memory corruption.",R520.1_TCU4_SCN,
+1-F1EXDI7,"SystemStability","ELCNApplianceENIM",UVA ENIMs experience periodic RDN timeouts.,R520.1_TCU4_SCN,
+RELCN-3130,"SystemStability","ELCN_Appliance_ENIM","vELCN ENIM Secondary failed during runtime inBLR PCT SYS2.",R520.1_TCU4_SCN,
+RELCN-3670,"SystemStability","ELCNApplianceENIM","BKUP ENIM failed with an OPSTAT busy timeoutduring the stable run.",R520.1_TCU4_SCN,
+1-F8U9CHF,Migration,EHPM,"EHPM Auto Import Service is not starting aftermigrating to R520.2 TCU3.",R520.1_TCU4_SCN,
+REUCN-7093,Usability,EHPMX,"[EHPMX] Eventlogs are flooding with ""xilinx-zynqlocal4.err pdt[728]: clsZmqBase.""",R520.1_TCU4_SCN,
+1-EXQ99CX,"Engineering/Configuration",PDA,"Enable Profibus Integration [PGM]with UOC.",R520.1_TCU4_SCN,
+1-EJYYPEL,Migration,"OPM-ControllerMigration","Migration support for Cx-PPIX01 withApp version 04.03.35 is missing fromR430.1 onwards.",R520.1_TCU4_SCN,
+1-DWDGZQL,System Stability,UOC-SERIES-A,"After conversion from C200 to UOCSeries A IOM's -TC-ODA161 - V2.3failing to communicate.",R520.1_TCU4_SCN,
+1-EE7WQ7V,System Stability,C300 Controller,"The C300 Module should alarm if thepartner has a better view of thenetwork.",R520.1_TCU4_SCN,
+1-EVONW9X,System Stability,ELCN-Bridge,"ELCN Bridge LCNI fails to completeissues commands.",R520.1_TCU4_SCN,
+1-EELKZWF,System Stability,CF-Control Function,"ACE failure was observed during ACEcutover in R500.2 patch 13.",R520.1_TCU4_SCN,
+1-EOQPPBL,System Stability,Control Builder,"If the OPTDIR parameter is uncheckedin the PCR window, OPDIR is changed.",R520.1_TCU4_SCN,
+1-E2YOI9F,"Engineering/Configuration",Control Builder-Fieldbus,"While importing Rosemount device DDfiles, the control builder is crashing.",R520.1_TCU4_SCN,
+1-E2J3ND6,System Stability,System Repository,"CDA disconnect and server switch overduring SRDB type updates.",R520.1_TCU4_SCN,
+1-E7WD4AB,System Stability,"Control Functions -Batch","With Dynamic Fetch enabledtransitions evaluation order may beunexpected.",R520.1_TCU4_SCN,
+1-EQ7MODZ,Migration,"OPM-ControllerMigration","Need to support R511.3 HF18 toR520.2 TCU3.",R520.1_TCU4_SCN,
+1-EX987N7,"Engineering/Configuration",Control Builder-Profibus,"[C300v5-PGM]Unable to configuremore than 4 PGM connections withC300v5.",R520.1_TCU4_SCN,
+1-EY2U6ZX,"Engineering/Configuration",PGM,"Unable to configure more than 4 PGMconnections with C300v5 (PCNT05).",R520.1_TCU4_SCN,
+1-F00ZR6N,System Stability,EHPM,"LOC (loss of control) and LOV (loss ofview) occurs when the EHPM runs withhigh P2P traffic and UCN data access.",R520.1_TCU4_SCN,
+1-EPF3PIV,"Engineering/Configuration","Control Builder-Load/Upload/Update","Yellow triangle appears after uploadand update to project while usingProjected parameters connectionbetween CMs.",R520.1_TCU4_SCN,
+1-EBCHOB7,System Stability,PGM,"[PCT] The PIOMB-AI module reporteda communication error and RTNed(returned) after 1 sec during a stablerun.",R520.1_TCU4_SCN,
+1-EPB8R8D,System Stability,EHPM,"EHPM has an IP address conflict withits partner when updating firmwarefrom non-Experion to Experion.",R520.1_TCU4_SCN,
+1-ES7W86B,System Stability,CEUOC-Platform,"Save UOC diagnostic data to NVSwhen a task monitor fault is detected.",R520.1_TCU4_SCN,
+1-ES3THSH,System Stability,CEUOC-Platform,"Controller must ensure redundancy-application communication isavailable for coordination.",R520.1_TCU4_SCN,
+1-ERSU45K,Usability,Firmware,"EHPM points have reverse videos onthe HMI display during checkpointingoperations.",R520.1_TCU4_SCN,
+REUCN-5873,System Stability,EHPM,"Frequent LOV (loss of view) in HMIWeb display with IO parameters fromlegacy EHPM that are loaded to PCTlimits.",R520.1_TCU4_SCN,
+1-EU4FJE5,System Stability,PGM,"PROFIBUS Inputs at DSBs are droppedduring slave failover.",R520.1_TCU4_SCN,
+1-EY77YFP,System Stability,PGM,Profibus Network Freeze on Inputs.,R520.1_TCU4_SCN,
+RELCN-3290,System Stability,UVA FTE,"Dual FTE failure of the BACKUP EXSIhost results in LOV (loss of view) onthe ENIM node and LOC (loss ofcontrol) on the AM node.",R520.1_TCU4_SCN,
+1-EK3TBP4,System Stability,"CDA-Control DataAccess",SN2023-06-22 01B.,R520.1_TCU4_SCN,
+1-EHR5MVM,"Engineering/Configuration",ELCN DB Import Utility,"A parameter mismatch is observedbetween the CB project and themonitoring side for the LLMUX point.",R520.1_TCU4_SCN,
+1-E3VQIS1,System Stability,CEUOC-Platform,"Implement diagnostics on the UOC(Unit Operations Controller) to betterunderstand BI hardware watchdogfaults (panic capture).",R520.1_TCU4_SCN,
+1-E8WMWQR,"Engineering/Configuration",Control Builder,"Enhancement to the inactivation ofthe controller's CEE from themonitoring side.",R520.1_TCU4_SCN,
+1-E98F7WL,"Engineering/Configuration",Control Builder Tools,"The ELCN database import tool isfailing to import LLMUX points inR511.5.",R520.1_TCU4_SCN,
+1-DODJI3B,System Stability,Control Builder-Chart,"Moving LOGIC gates (NothingLoaded) control builder applicationfailure on R511.4.",R520.1_TCU4_SCN,
+1-EEC79WN,"Engineering/Configuration",IEC61850_Tools,EIM Config limit issue with ConfRev.,R520.1_TCU4_SCN,
+1-EDAGW39,"Engineering/Configuration",ELCN DB Import Utility,"ELCN DB Import Utility Tools failed tomeet demand during the bulk importof EHPMs.",R520.1_TCU4_SCN,
+1-EES6TKP,"Engineering/Configuration",ELCN DB Import Utility,Issues with ELCN Import Utility log file.,R520.1_TCU4_SCN,
+1-E48LYZZ,System Stability,EBM-Tools,"UnitClsID is not unique, eliminatingunit class validation could causeruntime issues with the wrong unit.",R520.1_TCU4_SCN,
+1-DAGHVYP,Usability,"Server - Displays -General","Active state on all digital faceplatesopened, the OTP is hard to read aftermigration to R511.3.",R520.1_TCU4_SCN,
+1-ELF6YGL,Usability,I/O-Series 8,"Integrate Series C Mark II Non-HARTAO (CC-PAON01) to PC/LX andExperion - supply chain shortage.",R520.1_TCU4_SCN,
+1-DEWGGZF,System Stability,I/O-Series 8,"Excessive AO Channel InitializationTime (Series C AOH1M).",R520.1_TCU4_SCN,
+1-DZKBE0D,Usability,EHPM_Tools,"Allow DEB operations check box in theEHPM Platform block is not retainingthe selected option.",R520.1_TCU4_SCN,
+RELCN-3218,System Stability,ENIM,"Backup ENIM went to a FAIL stateafter 76 swaps during automated UEAENIM swaps.",R520.1_TCU4_SCN,
+1-ET1EBA7,Usability,CF-Control Function,"PV Off Normal On-Delay Time is notfunctioning versus configured time",R520.1_TCU4_SCN,
+1-EN461BH,Usability,I/O-Series 8,"The DO Driver chips on the 8C-PDODA1 have been EOL, need torefresh the HW and FW.",R520.1_TCU4_SCN,
+1-EN4D82B,Usability,I/O-Series C,"The DO Driver chips on the DC-PDOD51 have been EOL, need torefresh the HW and FW.",R520.1_TCU4_SCN,
+1-EYZFHQ5,Migration,"OPM-ControllerMigration","Need to support R511.4 HF10, R511.4HF11, R511.5 TCU3 to R520.2 TCU3.",R520.1_TCU4_SCN,
+1-DNF2N4P,System Stability,EBM-Tools,"Data Block crash when attempting tomodify a parameter inside.",R520.1_TCU4_SCN,
+1-EELKZWF,System Stability,CF-Control Function,"ACE failure was observed during ACECutover in R500.2 patch 13.",R520.1_TCU4_SCN,
+1-EZD1EMR,"Engineering/Configuration",Control Builder-Delete,"If we delete CM containing Series 8 IOchannels, then the deleted channelscannot be reused.",R520.1_TCU4_SCN,
+1-EFT8RIP,System Stability,EIP-COMMUNICATION,"EIP process was stuck in an infiniteloop after it took over as primary andfailed.",R520.1_TCU4_SCN,
+1-EYNIO47,System Stability,Firmware,"LOV (loss of view) occurs whenPrimary EHPM (Enhanced High-Performance Process Manager) withExperion integrated firmware swapsover (### DUAL ROLE EXISTS ###)(duplicate IP address during swap).",R520.1_TCU4_SCN,
+1-F00ZR6N,"SystemStability",EHPM,"LOC (Loss of control) and LOV (Loss of view) occurswhen the EHPM (Enhanced High-PerformanceProcess Manager) runs with high P2P traffic and UCNdata access.",R520.1_TCU4_SCN,
+1-EPB8R8D,"SystemStability",EHPM,"EHPM (Enhanced High-Performance ProcessManager) has an IP address conflict with its partnerwhen updating firmware from non-Experion toExperion.",R520.1_TCU4_SCN,
+1-EYNIO47,"SystemStability",Firmware,"LOV (loss of view) occurs when Primary EHPM(Enhanced High-Performance Process Manager) withExperion integrated firmware swaps over (### DUALROLE EXISTS ###) (duplicate IP address during swap).",R520.1_TCU4_SCN,
+1-EBCHOB7,System Stability,PGM,"During a stable run, the PIOMB-AI modulereported a communication error and returnedafter 1 second.",R520.1_TCU4_SCN,
+1-EX987N7,"Engineering/Configuration","ControlBuilder-Profibus","[C300v5-PGM] Unable to configure More than4 PGM connections with C300v5.",R520.1_TCU4_SCN,
+1-EY2U6ZX,"Engineering/Configuration",PGM,"Unable to configure more than 4 PGMconnections with C300v5 (PCNT05).",R520.1_TCU4_SCN,
+1-ESD7I83,"Engineering/Configuration",CE900-IO,Single Channel Download.,R520.1_TCU4_SCN,
+1-ASYXVEB,System Stability,"Standard SeriesC IO Modules","Redundant DI-24V (DC-PDIL51), DI-SOE(DC-PDIS51) report OK events randomly onIOLINK violet.",R520.1_TCU4_SCN,
+1-E9OAOLH,System Stability,I/O-Series C,"Series C Mark II DC-PDIL51 Module TurnsYellow after a power cycle of the system.",R520.1_TCU4_SCN,
+1-CZ28NXD,System Stability,"FieldbusInterfaceModule-SeriesC","AO block went to 3354 error device after theFIM2 /FIM4 switchover and all the AO arefreezed.",R520.1_TCU4_SCN,
+1-EICDGNJ,"Engineering/Configuration",Control Builder,Not able to load IO Ref due to License error.,R520.1_TCU4_SCN,
+1-E8Q4OZZ,"Engineering/Configuration",Control Builder,"After download of AIREF from project thevalues PVSOURCE and PVSRCOPT do notupdate in Monitoring.",R520.1_TCU4_SCN,
+1-E9QUJJR,System Stability,"FieldbusInterfaceModule","Primary FIM8 module failed with error code00D1.",R520.1_TCU4_SCN,
+1-ECGZSTH,System Stability,ELCN-Bridge,"ELCN Bridge not bridging anymore due toOut of Transmit buffers.",R520.1_TCU4_SCN,
+1-EDVVU7Z,System Stability,ELCN-Bridge,"ELCN Bridge still uses Cable A, even thoughCable A had improper connection and CableB was good.",R520.1_TCU4_SCN,
+1-DNGQNEF,Usability,"ModBus TCPBlocks","PCDI PV scaling is not working as expected inSIM-C300 scaling.",R520.1_TCU4_SCN,
+1-EF6I9U9,System Stability,CDA-Embedded,"FIM does not initiate connection with UOC,only UOC initiating to FIM is working.",R520.1_TCU4_SCN,
+1-E6WJ8CF,"Engineering/Configuration",CTools,"Need introduce CC-PAIH51 firmware packageto Series 8 to solve the supply chain shortage.",R520.1_TCU4_SCN,
+1-EH3B4BV,Migration,"OPM-ControllerMigration",Need to support R501.6 HF8 to R520.2 TCU2.,R520.1_TCU4_SCN,
+1-EHCHK3X,Usability,"OPM-ControllerMigration",Need to support R511.4 HF7 to R520.2 TCU2.,R520.1_TCU4_SCN,
+1-EJV6EB1,Migration,"OPM-ControllerMigration",Need to support R511.4 HF8 to R520.2 TCU2.,R520.1_TCU4_SCN,
+1-ELAJVWJ,Migration,"OPM-ControllerMigration","Need to support R511.3 HF15 to R520.2TCU2.",R520.1_TCU4_SCN,
+1-ERO3X9B,Migration,"OPM-ControllerMigration","Migration from R520.1 TCU4/ R511.5 TCU1/R511.5 TCU2/ R511.4 HF9/R510.2 HF12 toR520.2 TCU2.",R520.1_TCU4_SCN,
+1-E8TJQRN,"Engineering/Configuration","PGM HilscherSycon .NET","Missing range definitions of parameters inGSD file.",R520.1_TCU4_SCN,
+1-E8TJQRX,"Engineering/Configuration","PGM HilscherSycon .NET",Slot Restriction Definitions in HEX.,R520.1_TCU4_SCN,
+1-E1YPP07,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) Failed T148 after apower cycle.",R520.1_TCU4_SCN,
+1-DR2B4L3,System Stability,"C300 (CC-PCNT05)-Hardware","Secondary C300 (CC-PCNT05) failedPOST T150 IOL T177 (full cycle interrupttest) after switchover.",R520.1_TCU4_SCN,
+1-DX7RMEZ,System Stability,Procedure Explorer,"Frequently, the Procedure Explorer treeview is missing certain procedure items.",R520.1_TCU4_SCN,
+1-E1H0YA5,Usability,Procedure Explorer,"When the mouse scroll button is used, theZoom option in Procedure Explorer zoomsin.",R520.1_TCU4_SCN,
+1-E7HGG4R,Usability,Procedure Explorer,"Procedure Explorer does not allow ""drilling""into batch structure.",R520.1_TCU4_SCN,
+1-E8I9OZN,Usability,FIRMWARE,"(Error 1199) ""Alarm Reporting DeviceChanged"" after migrating toR690.1/R511.4.",R520.1_TCU4_SCN,
+1-EGNPYAJ,Usability,"ELCN ApplianceEPLCG","Some process alarms are not beingannounced by the UEA (UniversalEmbedded Appliance)-based EPLCG.",R520.1_TCU4_SCN,
+1-EHEGX39,System Stability,"ELCN ApplianceEPLCG","ELCN, UEA (Universal EmbeddedAppliance), and EPLCG alarm function isnot working.",R520.1_TCU4_SCN,
+1-E9BLI3Z,"Engineering/Configuration",C300 Controller,"Prevent unauthorized changes inController configuration.",R520.1_TCU4_SCN,
+1-EAG9FZR,Usability,"Series C UniversalIO Modules","AIH or UIO_2 module incorrectly reportsthe Device Type mismatch for HART7device.",R520.1_TCU4_SCN,
+1-DWYBT6V,Usability,EBM-Controller,"Pre-execution activities of MR becomesorphaned in two seconds with LookaheadON.",R520.1_TCU4_SCN,
+1-DZ53OZV,Usability,"Control Functions -Batch","Loss of Batch alarm flooding observedeven when no batches are executing inC300PM and C300 (CC-PCNT05).",R520.1_TCU4_SCN,
+1-E02W78X,Usability,UI Toolkit,"The dynamic re-binding of toolkit controlscan lead to hang displays.",R520.1_TCU4_SCN,
+REUCN-4728,System Stability,EHPM,"Make it possible for Enhanced High-Performance Process Manager to use analternative Level 1 switch(es) instead ofbeing forced to use a CF9.",R520.1_TCU4_SCN,
+1-E9I4LA5,"Engineering/Configuration",Control Builder,"When performing an update to the Project,error: EHI_E_INT 10527 occurs.",R520.1_TCU4_SCN,
+REUCN-5070,Usability,EHPM,"EHPM (Enhanced High-PerformanceProcess Manager) AI (Analog Input) pointis having station display issue's as perdescription.",R520.1_TCU4_SCN,
+1-E8189NX,Usability,"CAB-Embedded-Runtime","CAB data type implicit conversion fromUINT8/UINT16 to INT32 not working.",R520.1_TCU4_SCN,
+1-EEAFPRV,System Stability,"ELCN ApplianceEPLCG","After flashing backup ELCN EPLCG, thenative window displays the state as ""NotLoaded"" and ""OFF.""",R520.1_TCU4_SCN,
+1-EE7SN4B,System Stability,"ModBus TCPBlocks","C300 failed with following errors: 03A9and 00D1.",R520.1_TCU4_SCN,
+1-EFRBRVB,System Stability,"ModBus TCPBlocks","Readback PV values from PCDI numericarray channels are getting swapped forlong and float.",R520.1_TCU4_SCN,
+1-E3AWTI5,"Engineering/Configuration",EHPM_Tools,"When importing data from the ERDB(Engineering repository database) thatincluded P2P references with C300, theBADOCFL parameter of the EHPM(Enhanced High-Performance ProcessManager) does not work.",R520.1_TCU4_SCN,
+1-EIJAXGB,Migration,EIM - Platform,"Incompatible RDN IP address on newerfirmware, prevents migration when deviceindex >= 255.",R520.1_TCU4_SCN,
+1-EIPBH6P,System Stability,CEE-Database,"Dual failure during download of CM(Control Module) containing messageblock logic.",R520.1_TCU4_SCN,
+1-DUO1HAB,System Stability,"C300 (CC-PCNT05)-Hardware","C300 (CC-PCNT05) New Primary isreporting an unexpected “Memory BackupAssembly Warning.”",R520.1_TCU4_SCN,
+1-EAOIF2L,Usability,"ELCN ApplianceEPLCG","UEA (Universal Embedded Appliance)EPLCG requires power cycle after flashingnew firmware.",R520.1_TCU4_SCN,
+REUCN-5229,Usability,C300PM,"CL Phase Alarm behavior difference inboth EHPM (Enhanced High-PerformanceProcess Manager) and C300PM.",R520.1_TCU4_SCN,
+REUCN-4905,Usability,C300PM,"Post RR,C300PM CEE-PID writing data toPPX AO (PMIO) via EUCNOUT hasINITMAN ON permanently.",R520.1_TCU4_SCN,
+1-E3D54U7,"Engineering/Configuration","CDA-Control DataAccess","ICPP communication between C300 (CC-PCNT05)-C300 (CC-PCNT05), C300PM-C300PM , C300 (CC-PCNT05)-C300PMfails.",R520.1_TCU4_SCN,
