@@ -1,0 +1,27 @@
+———————————————Team Details —————————————————
+
+Team Name : OpenAHigh
+
+Problem Statement Title: Document Crawler and Analyzer using Agentic Al 
+
+College Name:  MS Ramaiah Institute of Technology , Bangalore 
+
+Member Details:
+
+1) Name: Suhas S
+    Email: suhass1345@gmail.com
+    Phone Number: 8088167206
+
+2) Name: Shamanth  Hiremath 
+    Email: shamanth.hiremath.101@gmail.com
+    Phone Number: 8660857769
+
+3) Name: Mihir Sai D
+    Email: mihirsaidudekula@gmail.com 
+    Phone Number: 7022466978
+
+4) Name: Ashutosh Kumar
+    Email: ak956901@gmail.com	
+    Phone Number: 8368467241
+
+
